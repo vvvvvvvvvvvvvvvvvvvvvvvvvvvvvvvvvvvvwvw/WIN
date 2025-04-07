@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{71314f6d-9e4c-4c16-abba-8e137a58e03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base">
+      <UniqueIdentifier>{00c7c231-29ff-4492-a50a-6f63652e1f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Object">
+      <UniqueIdentifier>{65582af8-f51b-48c0-8c92-a413cf1c4b5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\String">
+      <UniqueIdentifier>{f4158a96-40aa-4227-bdf7-8c5e22d56764}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Hresult">
+      <UniqueIdentifier>{d7326c26-511f-4251-906f-f15ca3364e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Handle">
+      <UniqueIdentifier>{76936a2c-e86d-48c3-987e-055cf075336c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-async">
+      <UniqueIdentifier>{2902f3d7-85db-4d5d-8dd6-2a13d678f004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-data">
+      <UniqueIdentifier>{916833d1-6005-43a9-95f9-48f9e055ea6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-dbg">
+      <UniqueIdentifier>{a91fb88f-b729-4b66-9036-79f8970ff5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-dbg\Console">
+      <UniqueIdentifier>{adf4aaea-d4d2-4009-8816-d0f7bad96158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-graphics">
+      <UniqueIdentifier>{98ef462e-5cc1-461e-a3d8-3096dba54c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-graphics\GDI">
+      <UniqueIdentifier>{cd9e77b8-6977-4d2a-a65c-4dea1c092041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-graphics\GDI+">
+      <UniqueIdentifier>{112287a1-93dc-42f5-8286-2fad901b3e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-graphics\D2D">
+      <UniqueIdentifier>{6730de62-3b32-4a72-97b0-7e972600a5fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-graphics\Graphics">
+      <UniqueIdentifier>{3b9d2909-605b-4315-9ae8-d8f7f8722072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io">
+      <UniqueIdentifier>{4e8f4546-6187-4cdf-91fe-3b281b851cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\File">
+      <UniqueIdentifier>{9f254ef3-3c6b-4fef-9e5f-18e7e42b848b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\Stream">
+      <UniqueIdentifier>{6ed59762-91da-4c58-adad-91fe38632fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\StreamWriter">
+      <UniqueIdentifier>{b99c2268-6e83-43e3-9f1a-a54feaac72b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\StreamReader">
+      <UniqueIdentifier>{f80856c8-3fbd-45ac-aff6-0dafcfd77748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\Path">
+      <UniqueIdentifier>{35a779fb-2030-48b5-a8b9-605c9f7ad808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\Directory">
+      <UniqueIdentifier>{016f0109-266b-4c60-a8fe-981097fe516d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\Watcher">
+      <UniqueIdentifier>{324b4476-fbc4-482e-9a56-b614158229a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-media">
+      <UniqueIdentifier>{fda45a85-6da8-4299-b23f-0a7d8cd9b541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net">
+      <UniqueIdentifier>{b239eefa-5d5a-4968-9fd2-b53013445451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\Socket">
+      <UniqueIdentifier>{17a5a492-5443-44d0-bb9d-c19e096393aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\WinSock">
+      <UniqueIdentifier>{100928ba-f1db-443b-a68d-4b926d7c2d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\TcpSocket">
+      <UniqueIdentifier>{4ebead36-7918-459c-bc8d-7c3eadb8fb10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\UdpSocket">
+      <UniqueIdentifier>{1dbe99ad-cf55-46c5-900c-a99bce4a409d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\TcpClient">
+      <UniqueIdentifier>{ef372786-97aa-43ba-a919-438f1bb8bf81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\UdpClient">
+      <UniqueIdentifier>{cf403ae1-89ad-4cde-b7bd-e343cf7f39aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\UdpListener">
+      <UniqueIdentifier>{6ee53ee4-faed-4be2-8009-a6fe518446cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-net\TcpListener">
+      <UniqueIdentifier>{892fe717-1324-4320-ba64-92de14273255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-system">
+      <UniqueIdentifier>{d970a023-d43e-465a-b779-db784f02a031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-threading">
+      <UniqueIdentifier>{14530a0e-d60e-433c-b80b-f57439ebf023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-ui">
+      <UniqueIdentifier>{4337fdae-bbfa-4edf-910a-3892b7052ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-ui\Controls">
+      <UniqueIdentifier>{5835422e-2fa9-4520-82ac-f5d78c2f696f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-web">
+      <UniqueIdentifier>{707d7f0e-abab-45a6-8f82-aa1e7626dd8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main">
+      <UniqueIdentifier>{5bf036be-26f9-4462-9e98-836a75ffa4a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main\win.debug">
+      <UniqueIdentifier>{14232ef9-ba3a-459f-bcd8-dec084c52d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main\win">
+      <UniqueIdentifier>{f859eeae-de77-4296-ad00-02ede747a7cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main\win.net">
+      <UniqueIdentifier>{40584953-35f7-4f5b-b6a9-31a1d75d3c5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main\win.io">
+      <UniqueIdentifier>{7e950c04-7a13-453d-a151-e23b40f84345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main\win.media">
+      <UniqueIdentifier>{5a98260d-84be-44fc-8899-3b442a7bb349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\Main\win.ui">
+      <UniqueIdentifier>{2e95f27c-481c-49b9-9ca1-9d967c0f5ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\IDisposibale">
+      <UniqueIdentifier>{e4510c8c-4e9b-4cf2-8279-0506046baa8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Random">
+      <UniqueIdentifier>{f4be63d7-1a62-4f44-a3f3-fe3ce3df9706}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.ixx">
+      <Filter>win\win-base\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="File.ixx">
+      <Filter>win\win-io\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Handle.ixx">
+      <Filter>win\win-base\Handle</Filter>
+    </ClCompile>
+    <ClCompile Include="Hresult.ixx">
+      <Filter>win\win-base\Hresult</Filter>
+    </ClCompile>
+    <ClCompile Include="String.ixx">
+      <Filter>win\win-base\String</Filter>
+    </ClCompile>
+    <ClCompile Include="win.ixx">
+      <Filter>win\Main\win</Filter>
+    </ClCompile>
+    <ClCompile Include="Handle.cpp">
+      <Filter>win\win-base\Handle</Filter>
+    </ClCompile>
+    <ClCompile Include="Hresult.cpp">
+      <Filter>win\win-base\Hresult</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>win\win-base\String</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.ixx">
+      <Filter>win\win-dbg\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>win\win-dbg\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>win\win-io\File</Filter>
+    </ClCompile>
+    <ClCompile Include="win-debug.ixx">
+      <Filter>win\Main\win.debug</Filter>
+    </ClCompile>
+    <ClCompile Include="win-io.ixx">
+      <Filter>win\Main\win.io</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.ixx">
+      <Filter>win\win-io\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Stream.ixx">
+      <Filter>win\win-io\Stream</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamReader.ixx">
+      <Filter>win\win-io\StreamReader</Filter>
+    </ClCompile>
+    <ClCompile Include="IDisposable.ixx">
+      <Filter>win\win-io\IDisposibale</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamReader.cpp">
+      <Filter>win\win-io\StreamReader</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamWriter.ixx">
+      <Filter>win\win-io\StreamWriter</Filter>
+    </ClCompile>
+    <ClCompile Include="StreamWriter.cpp">
+      <Filter>win\win-io\StreamWriter</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.ixx">
+      <Filter>win\win-base\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="Directory.cpp">
+      <Filter>win\win-io\Directory</Filter>
+    </ClCompile>
+    <ClCompile Include="Directory.ixx">
+      <Filter>win\win-io\Directory</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
