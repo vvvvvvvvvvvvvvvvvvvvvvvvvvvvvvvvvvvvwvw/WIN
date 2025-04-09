@@ -1,10 +1,10 @@
 #include <list>
 
+export module Directory;
+
 import Object;
 import String;
 import File;
-
-export module Directory;
 
 export namespace win::io
 {

@@ -1,9 +1,8 @@
-#include <wtypes.h>
-#include <exception>
-
-import Object;
+#include "pch.h"
 
 export module Handle;
+
+import Object;
 
 export namespace win
 {
@@ -32,5 +31,6 @@ export namespace win
 
 		explicit operator bool() const noexcept;
 		operator HANDLE() noexcept;
+		operator HANDLE() const noexcept;
 	};
 }

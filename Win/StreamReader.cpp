@@ -1,9 +1,9 @@
 #include <Windows.h>
 
+module StreamReader;
+
 import String;
 import Handle;
-
-module StreamReader;
 
 namespace win::io
 {

@@ -54,6 +54,11 @@ namespace win::io
         return m_handle;
     }
 
+    Handle File::GetStream() const
+    {
+        return m_handle;
+    }
+
     void File::Close()
     {
         m_handle.Close();
@@ -72,7 +77,7 @@ namespace win::io
         );
         if (!m_handle.IsValid())
         {
-            throw std::runtime_error("Failed to open file" + std::to_string(static_cast<int>(GetLastError())));
+            throw std::runtime_error("Failed to open file" + std::to_string((int)(GetLastError())));
         }
     }
 
@@ -137,5 +142,15 @@ namespace win::io
     String File::Name() const
     {
         return m_name;
+    }
+    l_int File::Size() const
+    {
+        return Size(m_handle);
+    }
+    l_int File::Size(Handle stream)
+    {
+        l_int size;
+        GetFileSizeEx(stream, &size);
+        return size;
     }
 }

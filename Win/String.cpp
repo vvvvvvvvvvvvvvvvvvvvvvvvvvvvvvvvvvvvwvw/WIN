@@ -1,37 +1,46 @@
-﻿#include <string>
-#include <iostream>
-#include <windows.h>
-#include <cstring>
+﻿#include "pch.h"
 
 module String;
 
 namespace win
 {
+    Char::Char(char ch)
+    {
+        this->ch = ch;
+    }
+    Char::Char(wchar_t wch)
+    {
+        this->ch = wch;
+    }
+
     String::String(const char* str)
         : m_string(cast::utf8_to_wstring(str))
     {
     }
-
     String::String(const wchar_t* str)
         : m_string(str)
     {
     }
-
+    String::String(const Char* str, size_t size)
+        : m_string(cast::to_wstring(str, size)) 
+    {
+    }
+    String::String(const Char* str) :
+        m_string((wchar_t*)str)
+    {
+    }
     String::String(const std::string& str)
         : m_string(cast::utf8_to_wstring(str))
     {
     }
-
     String::String(const std::wstring& str)
         : m_string(str)
     {
     }
-
     String::String(const String& str)
         : m_string(str.m_string)
     {
     }
-
     String::String(String&& str) noexcept
         : m_string(std::move(str.m_string))
     {
@@ -95,7 +104,7 @@ namespace win
     {
         std::string input;
         is >> input;
-        str.GetString() = cast::utf8_to_wstring(input);
+        str.c_wstr() = cast::utf8_to_wstring(input);
         return is;
     }
 }
@@ -113,7 +122,14 @@ namespace win::cast
         MultiByteToWideChar(CP_UTF8, 0, str.c_str(), static_cast<int>(str.size()), &wstr[0], size_needed);
         return wstr;
     }
-
+    std::wstring to_wstring(const Char* str, size_t size)
+    {
+        std::wstring result;
+        for (size_t i = 0; i < size; ++i) {
+            result.push_back(str[i]);
+        }
+        return result;
+    }
     // UTF-16 -> UTF-8
     std::string wstring_to_utf8(const std::wstring& wstr) {
         if (wstr.empty()) return {};
@@ -125,4 +141,13 @@ namespace win::cast
         WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), static_cast<int>(wstr.size()), &str[0], size_needed, nullptr, nullptr);
         return str;
     }
+    std::string to_string(const Char* str, size_t size)
+    {
+        std::string result;
+        for (size_t i = 0; i < size; ++i) {
+            result.push_back((char)(str[i]));
+        }
+        return result;
+    }
+   
 }

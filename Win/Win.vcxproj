@@ -128,8 +128,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Buffer.ixx" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Console.ixx" />
+    <ClCompile Include="MemoryMappedFile.cpp" />
+    <ClCompile Include="MemoryMappedFile.ixx" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="SyncTools.ixx" />
+    <ClCompile Include="Threading.ixx" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Time.ixx" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="Directory.ixx" />
     <ClCompile Include="File.cpp" />
@@ -139,8 +148,11 @@
     <ClCompile Include="Hresult.cpp" />
     <ClCompile Include="Hresult.ixx" />
     <ClCompile Include="IDisposable.ixx" />
+    <ClCompile Include="IHash.ixx" />
+    <ClCompile Include="Hash.ixx" />
     <ClCompile Include="Object.ixx" />
     <ClCompile Include="Path.ixx" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Random.ixx" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Stream.ixx" />
@@ -150,9 +162,15 @@
     <ClCompile Include="StreamWriter.ixx" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="String.ixx" />
+    <ClCompile Include="TypeDef.ixx" />
     <ClCompile Include="win-debug.ixx" />
     <ClCompile Include="win-io.ixx" />
+    <ClCompile Include="win-system.ixx" />
+    <ClCompile Include="win-threading.ixx" />
     <ClCompile Include="win.ixx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

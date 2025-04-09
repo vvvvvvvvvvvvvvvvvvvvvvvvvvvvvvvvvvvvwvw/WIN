@@ -14,8 +14,8 @@ namespace win::io
 		DWORD written = 0;
 		return WriteFile(
 			stream,
-			content.c_wstr().c_str(),                        
-			static_cast<DWORD>(content.c_wstr().length() * sizeof(wchar_t)),
+			content.data(),
+			((content.size() + 1) * sizeof(wchar_t)),
 			&written,
 			nullptr
 		);

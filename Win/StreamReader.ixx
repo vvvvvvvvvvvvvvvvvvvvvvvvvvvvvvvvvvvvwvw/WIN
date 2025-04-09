@@ -1,9 +1,9 @@
+export module StreamReader;
+
 import String;
 import Object;
 import Handle;
 import IDisposable;
-
-export module StreamReader;
 
 export namespace win::io
 {
@@ -21,6 +21,7 @@ export namespace win::io
 		StreamReader(Stream stream);
 
 		String ReadToEnd();
+		String ReadLine();
 		String TryRead();
 
 		void Dispose() override;

@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include "pch.h"
 
 module Handle;
 
@@ -80,6 +80,11 @@ namespace win
 	}
 
 	Handle::operator HANDLE() noexcept
+	{
+		return m_handle;
+	}
+
+	Handle::operator HANDLE() const noexcept
 	{
 		return m_handle;
 	}

@@ -1,3 +1,4 @@
+export module win.debug;
+
 export import Console;
 
-export module win.debug;

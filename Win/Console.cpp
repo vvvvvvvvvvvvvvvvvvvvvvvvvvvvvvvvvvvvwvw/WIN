@@ -1,7 +1,8 @@
-﻿#include <Windows.h>
-#include <string>
+﻿#include "pch.h"
 
 module Console;
+
+import Buffer;
 
 namespace win::dbg
 {
@@ -37,7 +38,12 @@ namespace win::dbg
 
     void Console::Write(const String& message)
     {
-        WriteConsoleW(m_output, message.data(), message.c_wstr().size(), nullptr, nullptr);
+        WriteConsoleW(m_output, message.data(), message.length(), nullptr, nullptr);
+    }
+
+    void Console::Write(const Buffer& buffer)
+    {
+        WriteConsoleW(m_output, buffer.data(), buffer.len(), nullptr, nullptr);
     }
 
     void Console::WriteLine(Color color, const String& message)

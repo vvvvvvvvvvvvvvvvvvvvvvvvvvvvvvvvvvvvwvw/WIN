@@ -1,13 +1,13 @@
 #include <Windows.h>
 #include <iostream>
 
+module Directory;
+
 import Handle;
 import String;
 import File;
 import Path;
 import Hresult;
-
-module Directory;
 
 namespace win::io
 {
@@ -70,7 +70,7 @@ namespace win::io
 
 	void Directory::Create()
 	{
-		if (!CreateDirectoryW(m_name.c_wstr().c_str(), NULL))
+		if (!CreateDirectoryW(m_name.data(), NULL))
 		{
 			Hresult hr(GetLastError());
 			hr.ThrowIfFailed("Failed to create directory");
@@ -92,13 +92,13 @@ namespace win::io
 
 	bool Directory::Exists(String name)
 	{
-		DWORD attr = GetFileAttributesW(name.c_wstr().c_str());
+		DWORD attr = GetFileAttributesW(name.data());
 		return attr != INVALID_FILE_ATTRIBUTES && (attr & FILE_ATTRIBUTE_DIRECTORY);
 	}
 
 	void Directory::Delete(String name)
 	{
-		if (!RemoveDirectoryW(name.c_wstr().c_str()))
+		if (!RemoveDirectoryW(name.data()))
 		{
 			Hresult hr(GetLastError());
 			hr.ThrowIfFailed("Failed to remove directory");

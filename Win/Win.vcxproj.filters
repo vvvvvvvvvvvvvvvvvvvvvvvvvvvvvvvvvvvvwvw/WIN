@@ -122,29 +122,35 @@
     <Filter Include="win\Main">
       <UniqueIdentifier>{5bf036be-26f9-4462-9e98-836a75ffa4a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="win\Main\win.debug">
-      <UniqueIdentifier>{14232ef9-ba3a-459f-bcd8-dec084c52d85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\Main\win">
-      <UniqueIdentifier>{f859eeae-de77-4296-ad00-02ede747a7cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\Main\win.net">
-      <UniqueIdentifier>{40584953-35f7-4f5b-b6a9-31a1d75d3c5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\Main\win.io">
-      <UniqueIdentifier>{7e950c04-7a13-453d-a151-e23b40f84345}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\Main\win.media">
-      <UniqueIdentifier>{5a98260d-84be-44fc-8899-3b442a7bb349}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\Main\win.ui">
-      <UniqueIdentifier>{2e95f27c-481c-49b9-9ca1-9d967c0f5ab1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="win\win-io\IDisposibale">
       <UniqueIdentifier>{e4510c8c-4e9b-4cf2-8279-0506046baa8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="win\win-base\Random">
       <UniqueIdentifier>{f4be63d7-1a62-4f44-a3f3-fe3ce3df9706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Buffer">
+      <UniqueIdentifier>{158719b2-7ebb-4466-899d-6c0e39e04453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Hashers">
+      <UniqueIdentifier>{43a09537-6cae-4b08-8f97-eacbe911e4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-system\Time">
+      <UniqueIdentifier>{7c0ec7c5-926a-45c5-a82f-5ccf54f7dde9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\TypeDefs">
+      <UniqueIdentifier>{176fe17b-0232-4a1b-ab45-08491cfdb982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-threading\Synchronization">
+      <UniqueIdentifier>{f698b351-a9a8-4eb1-a24b-624f94fff646}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-threading\Threading">
+      <UniqueIdentifier>{ae28edaa-5c5f-47e5-8959-06ea2fe57ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\pch">
+      <UniqueIdentifier>{d7e70b44-a2dd-4cfc-a579-a1ed7c2ec86d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-io\MemoryMappedFile">
+      <UniqueIdentifier>{8acf50cb-0292-4da0-91fa-33bbc1f61fa9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +172,6 @@
     <ClCompile Include="String.ixx">
       <Filter>win\win-base\String</Filter>
     </ClCompile>
-    <ClCompile Include="win.ixx">
-      <Filter>win\Main\win</Filter>
-    </ClCompile>
     <ClCompile Include="Handle.cpp">
       <Filter>win\win-base\Handle</Filter>
     </ClCompile>
@@ -186,12 +189,6 @@
     </ClCompile>
     <ClCompile Include="File.cpp">
       <Filter>win\win-io\File</Filter>
-    </ClCompile>
-    <ClCompile Include="win-debug.ixx">
-      <Filter>win\Main\win.debug</Filter>
-    </ClCompile>
-    <ClCompile Include="win-io.ixx">
-      <Filter>win\Main\win.io</Filter>
     </ClCompile>
     <ClCompile Include="Path.ixx">
       <Filter>win\win-io\Path</Filter>
@@ -223,5 +220,64 @@
     <ClCompile Include="Directory.ixx">
       <Filter>win\win-io\Directory</Filter>
     </ClCompile>
+    <ClCompile Include="Buffer.ixx">
+      <Filter>win\win-base\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>win\win-base\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>win\win-base\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="IHash.ixx">
+      <Filter>win\win-base\Hashers</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash.ixx">
+      <Filter>win\win-base\Hashers</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.ixx">
+      <Filter>win\win-system\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeDef.ixx">
+      <Filter>win\win-base\TypeDefs</Filter>
+    </ClCompile>
+    <ClCompile Include="Threading.ixx">
+      <Filter>win\win-threading\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="SyncTools.ixx">
+      <Filter>win\win-threading\Synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="win-system.ixx">
+      <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="win-io.ixx">
+      <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="win-debug.ixx">
+      <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="win.ixx">
+      <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="win-threading.ixx">
+      <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>win\win-system\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>win\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryMappedFile.ixx">
+      <Filter>win\win-io\MemoryMappedFile</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryMappedFile.cpp">
+      <Filter>win\win-io\MemoryMappedFile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>win\pch</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,9 +1,9 @@
+export module StreamWriter;
+
 import IDisposable;
 import Object;
 import String;
 import Handle;
-
-export module StreamWriter;
 
 export namespace win::io
 {

@@ -1,10 +1,11 @@
 #include <Windows.h>
 
+export module File;
+
 import Handle;
 import Object;
 import String;
-
-export module File;
+import TypeDef;
 
 export namespace win::io
 {
@@ -25,6 +26,9 @@ export namespace win::io
         ~File();
 
         Handle& GetStream();
+        Handle GetStream() const;
+        String ReadAll();
+        void Write(String content);
         void Close();
         void Open();
         void Rename(const String& newname);
@@ -33,5 +37,7 @@ export namespace win::io
         void Copy(const String& to);
         bool Exists() const;
         String Name() const;
+        l_int Size() const;
+        static l_int Size(Handle stream);
     };
 }

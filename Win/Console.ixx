@@ -1,11 +1,11 @@
-#include <Windows.h>
+#include "pch.h"
+export module Console;
 
 import Object;
 import String;
 import Handle;
 import Hresult;
-
-export module Console;
+import Buffer;
 
 export namespace win::dbg
 {
@@ -34,6 +34,8 @@ export namespace win::dbg
 
         static void Write(Color color, const String& message);
         static void Write(const String& message);
+
+        static void Write(const Buffer& buffer);
 
         static void WriteLine(Color color, const String& message);
         static void WriteLine(const String& message);
