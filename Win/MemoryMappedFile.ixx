@@ -24,7 +24,7 @@ export namespace win::io
         void Write(const String& content);
         void Write(const Buffer& buffer);
 
-        template<typename T = void*>
+        template<typename T = void>
         T* data();
 
         String ReadAll() const;
