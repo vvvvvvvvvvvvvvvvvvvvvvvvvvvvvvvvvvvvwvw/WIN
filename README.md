@@ -102,7 +102,7 @@ win::dbg::Console::Error(L"Произошла ошибка.");
 1. Клонируйте репозиторий:
 
    ```bash
-   git clone https://github.com/yourusername/WinAPI-Modular-Framework.git
+   git clone https://github.com/yourusername/WIN.git
    ```
 
 2. Скомпилируйте проект с использованием вашего любимого компилятора C++20:
