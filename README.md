@@ -71,8 +71,6 @@ win::dbg::Console::WriteLine(win::dbg::Console::Color::Green, L"Успешно!"
 win::dbg::Console::Error(L"Произошла ошибка.");
 ```
 
----
-
 ### 🧵 Многопоточность
 ```cpp
 import win;
@@ -99,6 +97,8 @@ int main()
 	return 0;
 }
 ```
+
+---
 
 ## 🚧 Планы на будущее
 
