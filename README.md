@@ -73,6 +73,33 @@ win::dbg::Console::Error(L"Произошла ошибка.");
 
 ---
 
+### 🧵 Многопоточность
+```cpp
+import win;
+import win.io;
+import win.debug;
+import win.threading;
+
+void Pool_Example()
+{
+	win::dbg::Console::Success("Hello From WINAPI!");
+}
+
+int main()
+{
+	win::threading::StaticThreadPool sth(3);
+	sth.enqueue(Pool_Example);
+	sth.enqueue(Pool_Example);
+	sth.enqueue(Pool_Example);
+
+	win::threading::Thread::Sleep(999999);
+
+	//   :(
+
+	return 0;
+}
+```
+
 ## 🚧 Планы на будущее
 
 В следующих версиях будет добавлено:
