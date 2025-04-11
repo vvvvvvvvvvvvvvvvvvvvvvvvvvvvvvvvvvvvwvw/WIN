@@ -135,7 +135,7 @@
     <ClCompile Include="MemoryMappedFile.cpp" />
     <ClCompile Include="MemoryMappedFile.ixx" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="SyncTools.ixx" />
+    <ClCompile Include="Synchronization.ixx" />
     <ClCompile Include="Threading.ixx" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Time.ixx" />
@@ -164,6 +164,7 @@
     <ClCompile Include="String.ixx" />
     <ClCompile Include="TypeDef.ixx" />
     <ClCompile Include="win-debug.ixx" />
+    <ClCompile Include="win-except.ixx" />
     <ClCompile Include="win-io.ixx" />
     <ClCompile Include="win-system.ixx" />
     <ClCompile Include="win-threading.ixx" />

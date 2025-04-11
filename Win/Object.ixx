@@ -4,6 +4,10 @@ export module Object;
 
 export namespace win
 {
+
+    using null = std::nullptr_t;
+
+
     template<typename DT>
     class Object
     {
@@ -13,7 +17,7 @@ export namespace win
 
         size_t HashCode();
 
-        operator DT* ();
+       /* operator DT* ();*/
 
     };
 
@@ -29,10 +33,10 @@ export namespace win
         return typeid(DT).hash_code();
     }
 
-    template<typename DT>
+   /* template<typename DT>
 	Object<DT>::operator DT* ()
 	{
 		return static_cast<DT*>(this);
-	}
+	}*/
 
 }

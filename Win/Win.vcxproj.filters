@@ -143,14 +143,14 @@
     <Filter Include="win\win-threading\Synchronization">
       <UniqueIdentifier>{f698b351-a9a8-4eb1-a24b-624f94fff646}</UniqueIdentifier>
     </Filter>
-    <Filter Include="win\win-threading\Threading">
-      <UniqueIdentifier>{ae28edaa-5c5f-47e5-8959-06ea2fe57ee8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="win\pch">
       <UniqueIdentifier>{d7e70b44-a2dd-4cfc-a579-a1ed7c2ec86d}</UniqueIdentifier>
     </Filter>
     <Filter Include="win\win-io\MemoryMappedFile">
       <UniqueIdentifier>{8acf50cb-0292-4da0-91fa-33bbc1f61fa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-threading\Threading">
+      <UniqueIdentifier>{302f3bb7-2b01-4e03-a88c-6f23fc87bbb2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -241,12 +241,6 @@
     <ClCompile Include="TypeDef.ixx">
       <Filter>win\win-base\TypeDefs</Filter>
     </ClCompile>
-    <ClCompile Include="Threading.ixx">
-      <Filter>win\win-threading\Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="SyncTools.ixx">
-      <Filter>win\win-threading\Synchronization</Filter>
-    </ClCompile>
     <ClCompile Include="win-system.ixx">
       <Filter>win\Main</Filter>
     </ClCompile>
@@ -273,6 +267,15 @@
     </ClCompile>
     <ClCompile Include="MemoryMappedFile.cpp">
       <Filter>win\win-io\MemoryMappedFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Threading.ixx">
+      <Filter>win\win-threading\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="win-except.ixx">
+      <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Synchronization.ixx">
+      <Filter>win\win-threading\Synchronization</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
