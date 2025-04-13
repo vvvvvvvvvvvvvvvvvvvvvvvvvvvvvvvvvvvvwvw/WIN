@@ -169,17 +169,15 @@ export namespace win::threading
                 InitializeConditionVariable(&cv);
             }
 
-            bool Wait(Func<bool> func, CriticalSection& cs, unsigned long time_out = INFINITE) {
+            template<typename Predicate>
+            bool Wait(CriticalSection& cs, Predicate&& func) {
+                static_assert(std::is_invocable_r_v<bool, Predicate>, "Predicate must be callable and return bool");
                 while (!func()) {
-                    if (!SleepConditionVariableCS(&cv, cs, time_out)) {
+                    if (!SleepConditionVariableCS(&cv, cs, INFINITE)) {
                         return false;
                     }
                 }
                 return true;
-            }
-
-            bool Wait(CriticalSection& cs, unsigned long time_out = INFINITE) {
-                return SleepConditionVariableCS(&cv, cs, time_out) != 0;
             }
 
             void Notify() {

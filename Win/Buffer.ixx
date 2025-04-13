@@ -19,6 +19,9 @@ export namespace win
 
 		explicit Buffer(char* data);
 
+		explicit Buffer(size_t size);
+
+
 		Buffer(const Buffer& other);
 
 		Buffer& operator=(const Buffer& other);
@@ -32,7 +35,8 @@ export namespace win
 			return m_len;
 		}
 
-		
+		void shrink(size_t size);
+
 		template<typename T = Char>
 		[[nodiscard]] T* data()
 		{

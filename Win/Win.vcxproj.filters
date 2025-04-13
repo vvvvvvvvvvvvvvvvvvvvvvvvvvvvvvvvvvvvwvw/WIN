@@ -83,27 +83,6 @@
     <Filter Include="win\win-net\Socket">
       <UniqueIdentifier>{17a5a492-5443-44d0-bb9d-c19e096393aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="win\win-net\WinSock">
-      <UniqueIdentifier>{100928ba-f1db-443b-a68d-4b926d7c2d1b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\win-net\TcpSocket">
-      <UniqueIdentifier>{4ebead36-7918-459c-bc8d-7c3eadb8fb10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\win-net\UdpSocket">
-      <UniqueIdentifier>{1dbe99ad-cf55-46c5-900c-a99bce4a409d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\win-net\TcpClient">
-      <UniqueIdentifier>{ef372786-97aa-43ba-a919-438f1bb8bf81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\win-net\UdpClient">
-      <UniqueIdentifier>{cf403ae1-89ad-4cde-b7bd-e343cf7f39aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\win-net\UdpListener">
-      <UniqueIdentifier>{6ee53ee4-faed-4be2-8009-a6fe518446cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="win\win-net\TcpListener">
-      <UniqueIdentifier>{892fe717-1324-4320-ba64-92de14273255}</UniqueIdentifier>
-    </Filter>
     <Filter Include="win\win-system">
       <UniqueIdentifier>{d970a023-d43e-465a-b779-db784f02a031}</UniqueIdentifier>
     </Filter>
@@ -276,6 +255,12 @@
     </ClCompile>
     <ClCompile Include="Synchronization.ixx">
       <Filter>win\win-threading\Synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="Net.ixx">
+      <Filter>win\win-net\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="win-net.ixx">
+      <Filter>win\Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

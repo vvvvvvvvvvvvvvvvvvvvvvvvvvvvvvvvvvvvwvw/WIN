@@ -1,10 +1,9 @@
-﻿#include <tuple>
-#include <memory>
-#include <Windows.h>
+﻿#include <Windows.h>
 #include <deque>
 #include <vector>
 #include <future>
 #include <queue>
+
 
 export module Threading;
 
@@ -95,7 +94,6 @@ export namespace win::threading {
         CriticalSection m_cs;
         ConditionVariable m_cv;
         bool m_running;
-
     private:
 
         void workerThread() {
@@ -103,7 +101,8 @@ export namespace win::threading {
                 std::function<void()> task;
                 {
                     LockGuard<CriticalSection> lock(m_cs);
-                    m_cv.Wait(m_cs, m_tasks.empty());
+                    m_cv.Wait(m_cs, [&]() { return !m_tasks.empty() || !m_running; });
+
 
                     if (!m_running && m_tasks.empty()) {
                         return; 
@@ -126,23 +125,21 @@ export namespace win::threading {
         {
             m_workers.reserve(thread_count);
             for (size_t i = 0; i < thread_count; ++i) {
-                m_workers.emplace_back(Task<void, StaticThreadPool*>{workerTask}, this);
+                m_workers.emplace_back(workerTask, this);
             }
         }
 
         template<typename F, typename... Args>
         void enqueue(F&& func, Args&&... args)
         {
-            {
-                LockGuard<CriticalSection> lock(m_cs);
-                m_tasks.emplace([f = std::decay_t<F>(std::forward<F>(func)),
-                    tuple_args = std::make_tuple(std::forward<Args>(args)...)]() mutable {
-                        std::apply(f, std::move(tuple_args));
-                    });
-            }
+            static_assert(sizeof...(Args) > 0, "No arguments provided!");
+            LockGuard<CriticalSection> lock(m_cs);
+            m_tasks.emplace([f = std::make_shared<std::decay_t<F>>(std::forward<F>(func)),
+                tuple_args = std::make_shared<std::tuple<std::decay_t<Args>...>>(std::forward<Args>(args)...)]() mutable {
+                    std::apply(*f, std::move(*tuple_args));
+                });
             m_cv.Notify();
         }
-
 
         template<typename F, typename... Args>
         auto enqueueWithResult(F&& func, Args&&... args) -> std::future<std::invoke_result_t<F, Args...>> 
@@ -194,6 +191,11 @@ template<typename RT, typename... ARGS>
 struct SystemThreadPoolContext : public TaskContext<RT, ARGS...>
 {
    WORK* owner;
+
+   SystemThreadPoolContext(Task<RT, ARGS...> f, ARGS&& ...a)
+       : TaskContext<RT, ARGS...>(f, std::forward<ARGS>(a)...), owner(nullptr)
+   {
+   }
 };
 
 template<typename RT, typename... ARGS>
@@ -201,10 +203,19 @@ VOID CALLBACK SystemPoolBody(PTP_CALLBACK_INSTANCE Instance, PVOID Context, PTP_
 {
     using Ctx = SystemThreadPoolContext<RT, ARGS...>;
     std::unique_ptr<Ctx> context(static_cast<Ctx*>(Context));
-    std::apply(context->func, context->args);
+    auto caller = [&]() -> RT {
+        return std::apply(
+            [](auto&& f, auto&&... args) -> RT {
+                return std::invoke(std::forward<decltype(f)>(f), std::forward<decltype(args)>(args)...);
+            },
+            std::tuple_cat(std::make_tuple(std::move(context->func)), std::move(context->args))
+        );
+    };
+    caller();
     if (context->owner)
         context->owner->working = false;
 }
+
 
 export namespace win::threading
 {
@@ -224,7 +235,7 @@ export namespace win::threading
             {
                 if (!w.working)
                 {
-                    auto* ctx = new SystemThreadPoolContext<RT, ARGS...>(task, std::forward<ARGS>(args)...);
+                    auto* ctx = new SystemThreadPoolContext<RT, ARGS...>(Task<RT, ARGS...>(task), std::forward<ARGS>(args)...);
                     ctx->owner = &w;
 
                     if (w.initalized)
@@ -233,10 +244,8 @@ export namespace win::threading
                         w.initalized = false;
                     }
 
-                 
-                    w.work = CreateThreadpoolWork(SystemPoolBody<RT, ARGS...>, ctx, NULL);
+                    w.work = CreateThreadpoolWork(SystemPoolBody<RT, ARGS...>, reinterpret_cast<PVOID>(ctx), NULL);
                     w.initalized = true;
-                 
 
                     SubmitThreadpoolWork(w.work);
                     w.working = true;
@@ -244,6 +253,7 @@ export namespace win::threading
                 }
             }
         }
+
     };
 
 }

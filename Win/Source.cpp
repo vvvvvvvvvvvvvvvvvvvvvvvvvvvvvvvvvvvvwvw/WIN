@@ -1,39 +1,27 @@
-﻿import win;
-import win.io;
-import win.debug;
+﻿#include <iostream>
 import win.threading;
+import win.net;
 
-
-#include <mutex>
-#include <string>
-
-void Pool_Test()
+void client_handling(win::net::Socket client)
 {
-	win::dbg::Console::Success(std::to_string(win::threading::Thread::Id()));
+    std::cout << "Client handled in system thread pool." << std::endl;
 }
 
 int main()
 {
-	win::threading::SystemThreadPool syth(10);
-	win::threading::Signal signal(true, false);
+   
+    win::net::Socket server_socket(win::net::ipv4, win::net::tcp);
+    server_socket.Bind("127.0.0.1", "8080");
+    server_socket.Listen(10);
 
-	syth.enqueue(Pool_Test);
-	syth.enqueue(Pool_Test);
-	syth.enqueue(Pool_Test);
-	syth.enqueue(Pool_Test);
+ 
+    win::threading::StaticThreadPool sys_pool(1);
 
-	win::threading::Thread::Sleep(2000);
-
-	syth.enqueue(Pool_Test);
-	syth.enqueue(Pool_Test);
-	syth.enqueue(Pool_Test);
-
-	win::threading::Thread::Sleep(2000);
-
-	syth.enqueue(Pool_Test);
-	syth.enqueue(Pool_Test);
-
-	win::threading::Thread::Sleep(2000);
-
-	return 0;
+    
+    while (true)
+    {
+        auto client = server_socket.Accept();
+        sys_pool.enqueue(client_handling, std::move(client));
+    }
+    return 0;
 }

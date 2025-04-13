@@ -2,6 +2,7 @@
 
 module String;
 
+
 namespace win
 {
     Char::Char(char ch)
@@ -149,5 +150,12 @@ namespace win::cast
         }
         return result;
     }
+
+
    
+    // STR -> INTEGER
+    int to_int(String str)
+    {
+        return StrToInt(str.data());
+    }
 }
