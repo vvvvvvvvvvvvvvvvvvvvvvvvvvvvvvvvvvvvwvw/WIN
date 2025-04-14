@@ -1,10 +1,17 @@
 ﻿#include <iostream>
+
 import win.threading;
 import win.net;
+import win.system;
 
 void client_handling(win::net::Socket client)
 {
-    std::cout << "Client handled in system thread pool." << std::endl;
+    // exo server
+    while (true)
+    {
+        win::Buffer message = client.Receive();
+        client.Send(message);
+    }
 }
 
 int main()
@@ -14,9 +21,7 @@ int main()
     server_socket.Bind("127.0.0.1", "8080");
     server_socket.Listen(10);
 
- 
-    win::threading::StaticThreadPool sys_pool(1);
-
+    win::threading::SystemThreadPool sys_pool;
     
     while (true)
     {

@@ -131,6 +131,9 @@
     <Filter Include="win\win-threading\Threading">
       <UniqueIdentifier>{302f3bb7-2b01-4e03-a88c-6f23fc87bbb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="win\win-system\Process">
+      <UniqueIdentifier>{ff59b239-d45f-431b-8c1b-0db9cd6f0187}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -261,6 +264,9 @@
     </ClCompile>
     <ClCompile Include="win-net.ixx">
       <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Process.ixx">
+      <Filter>win\win-system\Process</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

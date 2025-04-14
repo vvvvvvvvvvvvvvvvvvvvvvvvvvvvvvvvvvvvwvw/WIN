@@ -3,21 +3,21 @@
 
 export module Net;
 
-import win; // подключаем другие модули по необходимости
+import win;
 
-// Класс, отвечающий за инициализацию WinSock
+
 class WinSock
 {
 private:
     static int m_refcount;
-    WSADATA m_data; // Используем объект, а не указатель
+    LPWSADATA m_data; 
 public:
     WinSock()
     {
         if (++m_refcount == 1)
         {
-            // Передаём адрес m_data
-            if (WSAStartup(MAKEWORD(2, 2), &m_data))
+            m_data = new WSAData{};
+            if (WSAStartup(MAKEWORD(2, 2), m_data))
             {
                 throw 500;
             }
@@ -28,6 +28,10 @@ public:
         if (--m_refcount == 0)
         {
             WSACleanup();
+            if (m_data)
+            {
+                delete m_data;
+            }
         }
     }
 };

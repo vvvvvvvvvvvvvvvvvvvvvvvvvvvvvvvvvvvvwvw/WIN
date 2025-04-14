@@ -136,6 +136,7 @@
     <ClCompile Include="MemoryMappedFile.ixx" />
     <ClCompile Include="Net.ixx" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Process.ixx" />
     <ClCompile Include="Synchronization.ixx" />
     <ClCompile Include="Threading.ixx" />
     <ClCompile Include="Time.cpp" />

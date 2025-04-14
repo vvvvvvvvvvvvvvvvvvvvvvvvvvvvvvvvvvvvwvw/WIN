@@ -3,7 +3,11 @@
 #include <vector>
 #include <future>
 #include <queue>
-
+#include <memory>
+#include <tuple>
+#include <functional>
+#include <utility>
+#include <type_traits>
 
 export module Threading;
 
@@ -13,25 +17,24 @@ import TypeDef;
 import Synchronization;
 
 using namespace win;
-template<typename RT, typename... ARGS>
-using Task = Func<RT, ARGS...>;
 
 
-template<typename RT, typename... ARGS>
+template<typename F, typename... ARGS>
 struct TaskContext {
-    Task<RT, ARGS...> func;
+    F func;
     std::tuple<ARGS...> args;
 
-    TaskContext(Task<RT, ARGS...> f, ARGS&& ...a)
-        : func(f), args(std::forward<ARGS>(a)...)
+    TaskContext(F&& f, ARGS&&... a)
+        : func(std::forward<F>(f))
+        , args(std::forward<ARGS>(a)...)
     {
     }
 };
 
-template<typename RT, typename... ARGS>
+template<typename F, typename... ARGS>
 ULONG WINAPI ThreadBody(LPVOID lp)
 {
-    using Ctx = TaskContext<RT, ARGS...>;
+    using Ctx = TaskContext<F, ARGS...>;
     std::unique_ptr<Ctx> context(static_cast<Ctx*>(lp));
     std::apply(context->func, context->args);
     return 0;
@@ -46,19 +49,29 @@ export namespace win::threading
         CONTEXT* m_context;
         d_word m_id;
     private:
-
-        Thread(const Handle& hTherad) : m_hThread(hTherad) {}
+        Thread(const Handle& hThread) : m_hThread(hThread) {}
 
     public:
-        template<typename RT, typename... ARGS>
-        Thread(Task<RT, ARGS...> task, ARGS... args)
+        template<typename F, typename... ARGS, std::enable_if_t<std::is_invocable_v<F, ARGS...>, int> = 0>
+        Thread(F&& task, ARGS&&... args)
         {
-            auto* ctx = new TaskContext<RT, ARGS...>(task, std::forward<ARGS>(args)...);
-            m_hThread = CreateThread(0, 0, ThreadBody<RT, ARGS...>, ctx, 0, &m_id);
+
+            static_assert(std::is_invocable_v<F, ARGS...>, "IS NOT INVOCABLE");
+            using DecayF = std::decay_t<F>;
+            using Ctx = TaskContext<DecayF, std::decay_t<ARGS>...>;
+            auto* ctx = new Ctx(std::forward<F>(task), std::forward<ARGS>(args)...);
+            m_hThread = CreateThread(
+                nullptr,
+                0,
+                ThreadBody<DecayF, std::decay_t<ARGS>...>,
+                ctx,
+                0,
+                &m_id
+            );
             GetThreadContext(m_hThread, m_context);
         }
-        Thread(const Thread& other) : m_hThread(other.m_hThread) {};
-        Thread(Thread&& other) noexcept : m_hThread(std::move(other.m_hThread)) {};
+        Thread(const Thread& other) : m_hThread(other.m_hThread) {}
+        Thread(Thread&& other) noexcept : m_hThread(std::move(other.m_hThread)) {}
 
         void Join()
         {
@@ -95,31 +108,25 @@ export namespace win::threading {
         ConditionVariable m_cv;
         bool m_running;
     private:
-
         void workerThread() {
             while (true) {
                 std::function<void()> task;
                 {
                     LockGuard<CriticalSection> lock(m_cs);
                     m_cv.Wait(m_cs, [&]() { return !m_tasks.empty() || !m_running; });
-
-
                     if (!m_running && m_tasks.empty()) {
-                        return; 
+                        return;
                     }
-
                     task = std::move(m_tasks.front());
                     m_tasks.pop();
                 }
                 task();
             }
         }
-
         static void __stdcall workerTask(StaticThreadPool* pool)
         {
             pool->workerThread();
         }
-
     public:
         StaticThreadPool(size_t thread_count) : m_running(true)
         {
@@ -129,6 +136,7 @@ export namespace win::threading {
             }
         }
 
+        
         template<typename F, typename... Args>
         void enqueue(F&& func, Args&&... args)
         {
@@ -141,8 +149,9 @@ export namespace win::threading {
             m_cv.Notify();
         }
 
+       
         template<typename F, typename... Args>
-        auto enqueueWithResult(F&& func, Args&&... args) -> std::future<std::invoke_result_t<F, Args...>> 
+        auto enqueueWithResult(F&& func, Args&&... args) -> std::future<std::invoke_result_t<F, Args...>>
         {
             using ReturnType = std::invoke_result_t<F, Args...>;
             auto task = std::make_shared<std::packaged_task<ReturnType()>>(
@@ -180,80 +189,46 @@ export namespace win::threading {
 
 }
 
-struct WORK
-{
-    bool initalized;
-    bool working;
-    PTP_WORK work;
-};
-
-template<typename RT, typename... ARGS>
-struct SystemThreadPoolContext : public TaskContext<RT, ARGS...>
-{
-   WORK* owner;
-
-   SystemThreadPoolContext(Task<RT, ARGS...> f, ARGS&& ...a)
-       : TaskContext<RT, ARGS...>(f, std::forward<ARGS>(a)...), owner(nullptr)
-   {
-   }
-};
-
-template<typename RT, typename... ARGS>
+template<typename F, typename... ARGS>
 VOID CALLBACK SystemPoolBody(PTP_CALLBACK_INSTANCE Instance, PVOID Context, PTP_WORK Work)
 {
-    using Ctx = SystemThreadPoolContext<RT, ARGS...>;
+    using Ctx = TaskContext<F, ARGS...>;
     std::unique_ptr<Ctx> context(static_cast<Ctx*>(Context));
-    auto caller = [&]() -> RT {
+    using ReturnType = std::invoke_result_t<F, ARGS...>;
+    auto caller = [&]() -> ReturnType {
         return std::apply(
-            [](auto&& f, auto&&... args) -> RT {
+            [](auto&& f, auto&&... args) -> ReturnType {
                 return std::invoke(std::forward<decltype(f)>(f), std::forward<decltype(args)>(args)...);
             },
             std::tuple_cat(std::make_tuple(std::move(context->func)), std::move(context->args))
         );
-    };
+        };
     caller();
-    if (context->owner)
-        context->owner->working = false;
 }
-
 
 export namespace win::threading
 {
-
     class SystemThreadPool : public Object<SystemThreadPool>
     {
-    private:
-        std::vector<WORK> m_works;
     public:
+        SystemThreadPool() = default;
 
-        SystemThreadPool(size_t thread_count) : m_works(thread_count) {}
-
-        template<typename RT, typename... ARGS>
-        void enqueue(Task<RT, ARGS...> task, ARGS... args)
+        // Метод enqueue принимает любой вызываемый объект и его аргументы,
+        // создаёт контекст задачи и регистрирует его в системном пуле потоков.
+        template<typename F, typename... ARGS>
+        void enqueue(F&& func, ARGS&&... args)
         {
-            for (auto& w : m_works)
-            {
-                if (!w.working)
-                {
-                    auto* ctx = new SystemThreadPoolContext<RT, ARGS...>(Task<RT, ARGS...>(task), std::forward<ARGS>(args)...);
-                    ctx->owner = &w;
-
-                    if (w.initalized)
-                    {
-                        CloseThreadpoolWork(w.work);
-                        w.initalized = false;
-                    }
-
-                    w.work = CreateThreadpoolWork(SystemPoolBody<RT, ARGS...>, reinterpret_cast<PVOID>(ctx), NULL);
-                    w.initalized = true;
-
-                    SubmitThreadpoolWork(w.work);
-                    w.working = true;
-                    return;
-                }
-            }
+            using DecayF = std::decay_t<F>;
+            auto* ctx = new TaskContext<DecayF, std::decay_t<ARGS>...>(
+                std::forward<F>(func),
+                std::forward<ARGS>(args)...
+            );
+            PTP_WORK work = CreateThreadpoolWork(
+                &SystemPoolBody<DecayF, std::decay_t<ARGS>...>,
+                ctx,
+                nullptr
+            );
+            SubmitThreadpoolWork(work);
         }
-
     };
-
 }
