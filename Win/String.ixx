@@ -31,11 +31,14 @@ export namespace win
     // Char / String Universal types :)
     //----------------------------------------
 
+    
+
     class String : public Object<String>
     {
     private:
         std::wstring m_string;
     public:
+
         String() = default;
 
         String(const char* str);
@@ -51,6 +54,7 @@ export namespace win
         String& operator=(const String& str);
         String& operator=(String&& str) noexcept = default;
 
+        static const char* null;
       
         [[nodiscard]] std::wstring c_wstr() const noexcept
         {
@@ -62,7 +66,7 @@ export namespace win
             return m_string.data();
         }
 
-        [[nodiscard]] const wchar_t* data() noexcept
+        [[nodiscard]] wchar_t* data() noexcept
         {
             return m_string.data();
         }
@@ -82,10 +86,12 @@ export namespace win
             return m_string.size();
         }
 
+
         bool operator==(const char* str) const;
         bool operator==(const wchar_t* str) const;
 
         operator std::wstring() noexcept { return m_string; }
+       
     };
 
     std::ostream& operator<<(std::ostream& os, const String& str);
@@ -97,6 +103,8 @@ export namespace win
     String operator+(const String& lhs, const String& rhs);
    
 }
+
+const char* win::String::null = "";
 
 export namespace win::cast
 {

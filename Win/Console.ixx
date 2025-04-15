@@ -7,7 +7,7 @@ import Handle;
 import Hresult;
 import Buffer;
 
-export namespace win::dbg
+export namespace win::debug
 {
     class Console : public Object<Console>
     {

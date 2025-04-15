@@ -1,13 +1,4 @@
-﻿#include <Windows.h>
-#include <deque>
-#include <vector>
-#include <future>
-#include <queue>
-#include <memory>
-#include <tuple>
-#include <functional>
-#include <utility>
-#include <type_traits>
+﻿#include  "pch.h"
 
 export module Threading;
 
@@ -137,13 +128,12 @@ export namespace win::threading {
         }
 
         
-        template<typename F, typename... Args>
-        void enqueue(F&& func, Args&&... args)
+        template<typename F, typename... ARGS, std::enable_if_t<std::is_invocable_v<F, ARGS...>, int> = 0>
+        void enqueue(F&& func, ARGS&&... args)
         {
-            static_assert(sizeof...(Args) > 0, "No arguments provided!");
             LockGuard<CriticalSection> lock(m_cs);
             m_tasks.emplace([f = std::make_shared<std::decay_t<F>>(std::forward<F>(func)),
-                tuple_args = std::make_shared<std::tuple<std::decay_t<Args>...>>(std::forward<Args>(args)...)]() mutable {
+                tuple_args = std::make_shared<std::tuple<std::decay_t<ARGS>...>>(std::forward<ARGS>(args)...)]() mutable {
                     std::apply(*f, std::move(*tuple_args));
                 });
             m_cv.Notify();
@@ -213,8 +203,7 @@ export namespace win::threading
     public:
         SystemThreadPool() = default;
 
-        // Метод enqueue принимает любой вызываемый объект и его аргументы,
-        // создаёт контекст задачи и регистрирует его в системном пуле потоков.
+      
         template<typename F, typename... ARGS>
         void enqueue(F&& func, ARGS&&... args)
         {

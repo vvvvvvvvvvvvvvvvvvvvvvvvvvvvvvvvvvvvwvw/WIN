@@ -2,63 +2,6 @@
 
 import TypeDef;
 
-//module MemoryMappedFile;
-
-//namespace win::io
-//{
-//	MemoryMappedFile::MemoryMappedFile(const Handle& stream)
-//	{
-//		CreateFromStream(stream);
-//	}
-//
-//	MemoryMappedFile::MemoryMappedFile(const MemoryMappedFile& other) : pFile(other.pFile) {}
-//
-//	MemoryMappedFile::MemoryMappedFile(MemoryMappedFile&& other) noexcept : pFile(other.pFile)
-//	{
-//		UnMap(other.pFile);
-//	}
-//
-//	void MemoryMappedFile::Write(String content)
-//	{
-//		if (!pFile) throw 1;
-//		wchar_t* data = (wchar_t*)pFile;
-//		wcscpy_s(data, content.c_wstr().length() * sizeof(wchar_t), content.data());
-//	}
-//
-//	String MemoryMappedFile::ReadAll()
-//	{
-//		if (!pFile) throw 1;
-//		wchar_t* data = (wchar_t*)pFile;
-//		return String(data);
-//	}
-//
-//	void MemoryMappedFile::UnMap()
-//	{
-//		UnMap(pFile);
-//	}
-//
-//	void MemoryMappedFile::UnMap(void* view)
-//	{
-//		if (view)
-//		{
-//			UnmapViewOfFile(view);
-//			view = nullptr;
-//		}
-//	}
-//
-//	void* MemoryMappedFile::CreateFromStream(Handle stream)
-//	{
-//		if (!stream.IsValid()) throw 1;
-//
-//		Handle hMapping = CreateFileMappingW(stream, NULL, PAGE_READWRITE, 0, 0, NULL);
-//		pFile = MapViewOfFile(hMapping, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, 0);
-//	}
-//
-//	MemoryMappedFile::~MemoryMappedFile()
-//	{
-//		UnMap();
-//	}
-//}
 module MemoryMappedFile;
 
 namespace win::io

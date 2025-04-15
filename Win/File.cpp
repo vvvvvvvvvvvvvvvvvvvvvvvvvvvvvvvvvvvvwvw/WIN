@@ -1,6 +1,4 @@
-﻿#include <Windows.h>
-#include <stdexcept>
-#include <string>
+﻿#include "pch.h"
 
 module File;
 

@@ -4,7 +4,7 @@ module Console;
 
 import Buffer;
 
-namespace win::dbg
+namespace win::debug
 {
     
     Handle Console::m_output = GetStdHandle(STD_OUTPUT_HANDLE);

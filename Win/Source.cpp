@@ -1,32 +1,22 @@
-﻿#include <iostream>
-
-import win.threading;
+﻿import win.threading;
 import win.net;
 import win.system;
+import win.debug;
+import win.io;
+import win;
 
-void client_handling(win::net::Socket client)
-{
-    // exo server
-    while (true)
-    {
-        win::Buffer message = client.Receive();
-        client.Send(message);
-    }
-}
+
+win::threading::Signal signal(true, false);
 
 int main()
 {
-   
-    win::net::Socket server_socket(win::net::ipv4, win::net::tcp);
-    server_socket.Bind("127.0.0.1", "8080");
-    server_socket.Listen(10);
+	win::system::Process process("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
 
-    win::threading::SystemThreadPool sys_pool;
-    
-    while (true)
-    {
-        auto client = server_socket.Accept();
-        sys_pool.enqueue(client_handling, std::move(client));
-    }
-    return 0;
+	win::threading::Thread::Sleep(3000);
+
+	
+
+	signal.Wait();
+
+	return 0;
 }

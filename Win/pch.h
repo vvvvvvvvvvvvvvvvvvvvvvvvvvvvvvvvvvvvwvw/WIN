@@ -18,5 +18,13 @@
 #include <type_traits>
 #include <memory>
 #include <shlwapi.h>
+#include <deque>
+#include <vector>
+#include <future>
+#include <queue>
+#include <tuple>
+#include <functional>
+#include <utility>
+
 
 #pragma comment(lib, "shlwapi.lib")

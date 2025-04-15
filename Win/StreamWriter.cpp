@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include "pch.h"
 
 module StreamWriter;
 
@@ -8,14 +8,14 @@ namespace win::io
 	{
 		if (!this->stream.IsValid()) throw 1;
 	}
-
+	
 	bool StreamWriter::Write(String content)
 	{
 		DWORD written = 0;
 		return WriteFile(
 			stream,
 			content.data(),
-			((content.size() + 1) * sizeof(wchar_t)),
+			content.size(),
 			&written,
 			nullptr
 		);
