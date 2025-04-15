@@ -259,7 +259,7 @@
     <ClCompile Include="Synchronization.ixx">
       <Filter>win\win-threading\Synchronization</Filter>
     </ClCompile>
-    <ClCompile Include="Net.ixx">
+    <ClCompile Include="Socket.ixx">
       <Filter>win\win-net\Socket</Filter>
     </ClCompile>
     <ClCompile Include="win-net.ixx">
@@ -270,6 +270,12 @@
     </ClCompile>
     <ClCompile Include="Error.ixx">
       <Filter>win\win-dbg</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>win\win-net\Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="WinSock.ixx">
+      <Filter>win\win-net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,4 +12,18 @@ export namespace win
 	using context = void*;
 	template<typename RT, typename... ARGS>
 	using Func = RT(__stdcall*)(ARGS...);
+
+
+	struct TcpStandart
+	{
+		int m_version;
+		int required_version;
+	};
+
+	struct TcpPacket : public TcpStandart
+	{
+		char* m_data;
+		int code;
+	};
+
 }

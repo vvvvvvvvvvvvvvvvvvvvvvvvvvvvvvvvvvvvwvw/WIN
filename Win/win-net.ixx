@@ -1,3 +1,3 @@
 export module win.net;
 
-export import Net;
+export import Socket;
