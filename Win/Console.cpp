@@ -49,13 +49,13 @@ namespace win::debug
     void Console::WriteLine(Color color, const String& message)
     {
         Write(color, message);
-        Write(L"\n");  
+        Write('\n');
     }
 
     void Console::WriteLine(const String& message)
     {
         Write(message);
-        Write(L"\n");
+        Write('\n');
     }
 
     void Console::Beep(u_int frq, u_int ms)

@@ -18,6 +18,8 @@ export namespace win
 	public:
 		Buffer() = default;
 
+		template<typename T>
+		Buffer(const T& data);
 		Buffer(const std::wstring& data);
 		Buffer(const char* data);
 		Buffer(size_t size);
@@ -38,6 +40,15 @@ export namespace win
 		template<typename T = Char>
 		[[nodiscard]] const T* data() const;
 	};
+
+	template<typename T>
+	Buffer::Buffer(const T& data)
+	{
+		m_capacity = sizeof(data);
+		m_data = new wchar_t[m_capacity / sizeof(wchar_t)]; 
+		memcpy(m_data, &data, m_capacity); 
+		m_len = m_capacity / sizeof(wchar_t);  
+	}
 
 	template<typename T>
 	T* Buffer::data()

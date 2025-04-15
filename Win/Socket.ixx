@@ -6,6 +6,7 @@ export module Socket;
 import win;
 import Error;
 import WinSock;
+import TypeDef;
 
 export namespace win::net
 {
@@ -62,4 +63,19 @@ export namespace win::net
 
         ~Socket() { Close(); }
     };
+
+
+    class TcpSocket : public Socket, public Object<TcpSocket>
+    {
+    private:
+
+    public:
+
+        void SendPacket(TcpStandart* packet)
+        {
+            this->Send(packet);
+        }
+        TcpStandart* Receive();
+    };
+
 }
