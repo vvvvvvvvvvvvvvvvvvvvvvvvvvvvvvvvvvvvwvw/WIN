@@ -3,6 +3,7 @@
 export module Buffer;
 
 import Object;
+import Error;
 import String;
 
 export namespace win
@@ -10,50 +11,43 @@ export namespace win
 	struct Buffer : public Object<Buffer>
 	{
 	private:
-		char* m_data{ nullptr };
+		wchar_t* m_data{ nullptr };
 		size_t m_len{ 0 };
+		size_t m_capacity{ 0 };
+
 	public:
 		Buffer() = default;
 
-		explicit Buffer(const String& data);
-
-		explicit Buffer(char* data);
-
-		explicit Buffer(size_t size);
-
-
+		Buffer(const std::wstring& data);
+		Buffer(const char* data);
+		Buffer(size_t size);
 		Buffer(const Buffer& other);
-
 		Buffer& operator=(const Buffer& other);
-
 		Buffer(Buffer&& other) noexcept;
-
 		Buffer& operator=(Buffer&& other) noexcept;
+		~Buffer();
 
-		[[nodiscard]] size_t len() const
-		{
-			return m_len;
-		}
-
-		void shrink(size_t size);
-
-		template<typename T = Char>
-		[[nodiscard]] T* data()
-		{
-			return reinterpret_cast<T*>(m_data);
-		}
-
-		template<typename T = Char>
-		[[nodiscard]] const T* data() const
-		{
-			return reinterpret_cast<const T*>(m_data);
-		}
-
+		void resize(size_t size);
 		void free();
 
-		~Buffer()
-		{
-			free();
-		}
+		[[nodiscard]] size_t len() const;
+
+		template<typename T = Char>
+		[[nodiscard]] T* data();
+
+		template<typename T = Char>
+		[[nodiscard]] const T* data() const;
 	};
+
+	template<typename T>
+	T* Buffer::data()
+	{
+		if (!m_data) throw debug::Error("Buffer is null");
+		return reinterpret_cast<T*>(m_data);
+	}
+	template<typename T>
+	const T* Buffer::data() const
+	{
+		return data<T>();
+	}
 }

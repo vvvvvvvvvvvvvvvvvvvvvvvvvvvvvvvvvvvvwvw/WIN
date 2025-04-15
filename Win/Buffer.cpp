@@ -4,81 +4,90 @@ module Buffer;
 
 namespace win
 {
-	Buffer::Buffer(const String& data)
-	{
-		m_len = data.length();
-		m_data = new char[(m_len + 1) * sizeof(wchar_t)];
-		memcpy(m_data, data.data(), (m_len + 1) * sizeof(wchar_t));
-	}
-	
-	Buffer::Buffer(char* data)
-	{
-		if (data)
-		{
-			m_len = strlen(data);
-			m_data = new char[m_len + 1] {};
-			memcpy(m_data, data, m_len);
-		}
-	}
-	Buffer::Buffer(size_t size)
-	{
-		m_data = new char[size];
-		m_len = strlen(m_data);
-	}
-	Buffer::Buffer(const Buffer& other)
-	{
-		m_len = other.m_len;
-		m_data = new char[m_len + 1] {};
-		memcpy(m_data, other.m_data, m_len);
-	}
-	Buffer& Buffer::operator=(const Buffer& other)
-	{
-		if (this != &other)
-		{
-			delete[] m_data;
-			m_len = other.m_len;
-			m_data = new char[m_len + 1] {};
-			memcpy(m_data, other.m_data, m_len);
-		}
-		return *this;
-	}
-	Buffer::Buffer(Buffer&& other) noexcept
-		: m_data(other.m_data), m_len(other.m_len)
-	{
-		other.m_data = nullptr;
-		other.m_len = 0;
-	}
-	Buffer& Buffer::operator=(Buffer&& other) noexcept
-	{
-		if (this != &other)
-		{
-			delete[] m_data;
-			m_data = other.m_data;
-			m_len = other.m_len;
-			other.m_data = nullptr;
-			other.m_len = 0;
-		}
-		return *this;
-	}
-	void Buffer::shrink(size_t size)
-	{
-		if (size >= m_len) return; 
+    Buffer::Buffer(const std::wstring& data) {
+        m_len = data.length();
+        m_capacity = m_len + 1;
+        m_data = new wchar_t[m_capacity];
+        std::wmemcpy(m_data, data.c_str(), m_capacity);
+    }
+  
+    Buffer::Buffer(const char* data) {
+        if (data) {
+            size_t len = std::strlen(data);
+            m_data = new wchar_t[len + 1];
+            std::mbstowcs(m_data, data, len + 1);
+            m_len = std::wcslen(m_data);
+            m_capacity = m_len + 1;
+        }
+    }
 
-		char* temp = new char[size];
-		memcpy(temp, m_data, size); 
+    Buffer::Buffer(size_t size) {
+        m_data = new wchar_t[size]();
+        m_capacity = size;
+        m_len = 0;
+    }
+   
+    Buffer::Buffer(const Buffer& other) {
+        m_len = other.m_len;
+        m_capacity = other.m_capacity;
+        m_data = new wchar_t[m_capacity];
+        std::wmemcpy(m_data, other.m_data, m_capacity);
+    }
 
-		delete[] m_data;        
-		m_data = temp;             
-		m_len = size;            
-	}
+    Buffer& Buffer::operator=(const Buffer& other) {
+        if (this != &other) {
+            delete[] m_data;
+            m_len = other.m_len;
+            m_capacity = other.m_capacity;
+            m_data = new wchar_t[m_capacity];
+            std::wmemcpy(m_data, other.m_data, m_capacity);
+        }
+        return *this;
+    }
 
-	void Buffer::free()
-	{
-		if (m_data)
-		{
-			delete[] m_data;
-			m_data = nullptr;
-			m_len = 0;
-		}
-	}
+    Buffer::Buffer(Buffer&& other) noexcept
+        : m_data(other.m_data), m_len(other.m_len), m_capacity(other.m_capacity) {
+        other.m_data = nullptr;
+        other.m_len = 0;
+        other.m_capacity = 0;
+    }
+   
+    Buffer& Buffer::operator=(Buffer&& other) noexcept {
+        if (this != &other) {
+            delete[] m_data;
+            m_data = other.m_data;
+            m_len = other.m_len;
+            m_capacity = other.m_capacity;
+            other.m_data = nullptr;
+            other.m_len = 0;
+            other.m_capacity = 0;
+        }
+        return *this;
+    }
+    
+    Buffer::~Buffer() {
+        delete[] m_data;
+    }
+
+    void Buffer::resize(size_t size) {
+        if (size >= m_capacity) return;
+
+        wchar_t* temp = new wchar_t[size]();
+        std::wmemcpy(temp, m_data, size);
+        delete[] m_data;
+        m_data = temp;
+        m_capacity = size;
+        m_len = std::wcslen(m_data);
+    }
+
+    void Buffer::free() {
+        delete[] m_data;
+        m_data = nullptr;
+        m_len = 0;
+        m_capacity = 0;
+    }
+    size_t Buffer::len() const
+    {
+        return m_len;
+    }
 }

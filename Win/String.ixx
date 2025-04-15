@@ -113,6 +113,7 @@ export namespace win::cast
     std::string to_string(const Char* str, size_t size);
     std::wstring to_wstring(const Char* str, size_t size);
     int to_int(String str);
+    std::string to_string(int value);
 }
 
 

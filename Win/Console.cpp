@@ -28,7 +28,7 @@ namespace win::debug
     void Console::Write(Color color, const String& message)
     {
         CONSOLE_SCREEN_BUFFER_INFO csbi;
-        WORD originalAttributes = 7; 
+        WORD originalAttributes = 7;
         if (GetConsoleScreenBufferInfo(m_output, &csbi))
             originalAttributes = csbi.wAttributes;
         SetConsoleTextAttribute(m_output, static_cast<WORD>(color));
@@ -49,13 +49,13 @@ namespace win::debug
     void Console::WriteLine(Color color, const String& message)
     {
         Write(color, message);
-        Write("\n");  
+        Write(L"\n");  
     }
 
     void Console::WriteLine(const String& message)
     {
         Write(message);
-        Write("\n");
+        Write(L"\n");
     }
 
     void Console::Warning(const String& message)
@@ -70,7 +70,7 @@ namespace win::debug
 
     void Console::Info(const String& message)
     {
-        WriteLine(Color::Cyan, message);
+        WriteLine(Color::Gray, message);
     }
 
     void Console::Success(const String& message)

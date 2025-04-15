@@ -1,50 +1,51 @@
 ﻿#include "pch.h"
 
-import TypeDef;
-
 module MemoryMappedFile;
+
+import TypeDef;
+import Error;
 
 namespace win::io
 {
     MemoryMappedFile::MemoryMappedFile(const Handle& stream)
     {
         if (!stream.IsValid()) {
-            throw std::runtime_error("Invalid stream handle");
+            throw debug::Error("Invalid handle");
         }
 
         l_int mappingSize = File::Size(stream);
 
         Handle hMapping = CreateFileMappingW(stream, 0, PAGE_READWRITE, mappingSize.HighPart, mappingSize.LowPart, nullptr);
         if (!hMapping.IsValid()) {
-            throw std::runtime_error("Failed to create file mapping");
+            throw debug::SystemError("Canot create mapping");
         }
         mappedSize = mappingSize.QuadPart;
 
         pFile = MapViewOfFile(hMapping, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, 0);
         if (!pFile) {
             hMapping.Close();
-            throw std::runtime_error("Failed to map view of file");
+            throw debug::SystemError("Failed to map view of file");
         }
     }
 
     MemoryMappedFile::MemoryMappedFile(const File& file)
     {
         if (!file.GetStream().IsValid()) {
-            throw std::runtime_error("Invalid stream handle");
+            throw debug::Error("Invalid handle");
         }
 
         l_int mappingSize = file.Size();
 
         Handle hMapping = CreateFileMappingW(file.GetStream(), 0, PAGE_READWRITE, mappingSize.HighPart, mappingSize.LowPart, nullptr);
         if (!hMapping.IsValid()) {
-            throw std::runtime_error("Failed to create file mapping");
+            throw debug::SystemError("Canot create mapping");
         }
         mappedSize = mappingSize.QuadPart;
 
         pFile = MapViewOfFile(hMapping, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, 0);
         if (!pFile) {
             hMapping.Close();
-            throw std::runtime_error("Failed to map view of file");
+            throw debug::SystemError("Failed to map view of file");
         }
     }
 
@@ -83,11 +84,11 @@ namespace win::io
     void MemoryMappedFile::Write(const String& content)
     {
         if (!pFile) {
-            throw std::runtime_error("Memory not mapped");
+            throw debug::Error("Memory not mapped");
         }
         if (mappedSize < (content.size() + 1) * sizeof(wchar_t))
         {
-            throw std::runtime_error("Mapped Size lower than content size");
+            throw debug::Error("Mapped Size lower than content size");
         }
         wcscpy_s((wchar_t*)(pFile), mappedSize / sizeof(wchar_t), content.data());
     }
@@ -95,10 +96,10 @@ namespace win::io
     void MemoryMappedFile::Write(const Buffer& buffer)
     {
         if (!pFile) {
-            throw std::runtime_error("Memory not mapped");
+            throw debug::Error("Memory not mapped");
         }
         if (buffer.len() > mappedSize) {
-            throw std::runtime_error("Content exceeds mapped size");
+            throw debug::Error("Mapped Size lower than content size");
         }
         wcscpy_s((wchar_t*)pFile, mappedSize / sizeof(wchar_t), buffer.data<wchar_t>());
     }
@@ -106,7 +107,7 @@ namespace win::io
     String MemoryMappedFile::ReadAll() const
     {
         if (!pFile) {
-            throw std::runtime_error("Memory not mapped");
+            throw debug::Error("Memory not mapped");
         }
         return String((wchar_t*)pFile);
     }

@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 
 module String;
-
+import Hresult;
 
 namespace win
 {
@@ -151,6 +151,15 @@ namespace win::cast
         return result;
     }
 
+    // INTEGER -> STR
+    std::string to_string(int value)
+    {
+        char* str = nullptr;
+        Hresult result = IntToChar(value, str);
+
+        result.ThrowIfFailed("Cast error");
+        return str;
+    }
 
    
     // STR -> INTEGER

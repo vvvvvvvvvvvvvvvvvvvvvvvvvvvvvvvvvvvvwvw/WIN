@@ -4,25 +4,11 @@ export module Process;
 
 import win;
 import Threading;
+import Error;
 
 
 export namespace win::system
 {
-
-    class Error : public std::runtime_error
-    {
-    public:
-        Error(int code)
-            : std::runtime_error("System Error: " + std::to_string(code)), m_code(code)
-        {
-        }
-
-        int Code() const { return m_code; }
-
-    private:
-        int m_code;
-    };
-
     class Process : public Object<Process>
     {
     private:
@@ -66,8 +52,7 @@ export namespace win::system
 
             if (!result)
             {
-                DWORD error = GetLastError();
-                throw win::system::Error(error); 
+                throw debug::Error("Process Open Error");
             }
 
             m_hProcess = m_pinfo.hProcess;
@@ -76,7 +61,7 @@ export namespace win::system
         void Terminate()
         {
             if (!m_hProcess.IsValid())
-                throw 404;
+                throw debug::Error("Invalid handle");
 
             TerminateProcess(m_hProcess, 0);
         }
@@ -84,7 +69,7 @@ export namespace win::system
         void Wait()
         {
             if (!m_hProcess.IsValid())
-                throw 404;
+                throw debug::Error("Invalid handle");
 
             WaitForSingleObject(m_hProcess, INFINITE);
         }

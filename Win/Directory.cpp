@@ -7,6 +7,7 @@ import String;
 import File;
 import Path;
 import Hresult;
+import Error;
 
 namespace win::io
 {
@@ -78,7 +79,7 @@ namespace win::io
 
 	void Directory::Add(File& file)
 	{
-		if (!Exists() || !file.Exists()) return;
+		if (!Exists() || !file.Exists()) throw debug::Error("Pls Create Dir");
 
 		file.Move(Path::Combine(m_name, file.Name()));
 		m_files.push_back(file);

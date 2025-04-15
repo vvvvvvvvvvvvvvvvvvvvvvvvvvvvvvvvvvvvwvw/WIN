@@ -14,6 +14,9 @@ export namespace win::debug
     private:
         static Handle m_output;
         static Handle m_input;
+    private:
+
+    
     public:
         enum class Color
         {
@@ -26,6 +29,12 @@ export namespace win::debug
             Yellow = 14,
             White = 15,
             Gray = 16
+        };
+        enum class Background
+        {
+            Red = BACKGROUND_RED | BACKGROUND_INTENSITY,
+            Green = BACKGROUND_GREEN | BACKGROUND_INTENSITY,
+            Yellow = BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY,
         };
 
         Console() = delete;

@@ -132,6 +132,7 @@
     <ClCompile Include="Buffer.ixx" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Console.ixx" />
+    <ClCompile Include="Error.ixx" />
     <ClCompile Include="MemoryMappedFile.cpp" />
     <ClCompile Include="MemoryMappedFile.ixx" />
     <ClCompile Include="Net.ixx" />

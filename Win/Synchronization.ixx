@@ -6,6 +6,7 @@ export module Synchronization;
 import Object;
 import Handle;
 import TypeDef;
+import Error;
 
 export namespace win::threading
 {
@@ -19,27 +20,27 @@ export namespace win::threading
             Signal(bool manual, bool state) {
                 m_hEvent = CreateEvent(nullptr, manual, state, nullptr);
                 if (!m_hEvent.IsValid()) {
-                    throw 404;
+                    debug::Error("Invalid handle");
                 }
             }
 
             void Set() {
                 if (!m_hEvent.IsValid()) {
-                    throw std::runtime_error("Invalid event handle");
+                    debug::Error("Invalid handle");
                 }
                 SetEvent(m_hEvent);
             }
 
             void ReSet() {
                 if (!m_hEvent.IsValid()) {
-                    throw std::runtime_error("Invalid event handle");
+                    debug::Error("Invalid handle");
                 }
                 ResetEvent(m_hEvent);
             }
 
             unsigned long Wait(unsigned long timeout = INFINITE) {
                 if (!m_hEvent.IsValid()) {
-                    throw std::runtime_error("Invalid event handle");
+                    debug::Error("Invalid handle");
                 }
                 return WaitForSingleObject(m_hEvent, timeout);
             }
@@ -62,7 +63,7 @@ export namespace win::threading
             Mutex() {
                 m_hMutex = CreateMutex(nullptr, false, nullptr);
                 if (!m_hMutex.IsValid()) {
-                    throw 404;
+                    debug::Error("Invalid handle");
                 }
             }
 
@@ -71,14 +72,14 @@ export namespace win::threading
 
             void Lock() {
                 if (!m_hMutex.IsValid()) {
-                    throw std::runtime_error("Invalid mutex handle");
+                    debug::Error("Invalid handle");
                 }
                 WaitForSingleObject(m_hMutex, INFINITE);
             }
 
             void Unlock() {
                 if (!m_hMutex.IsValid()) {
-                    throw std::runtime_error("Invalid mutex handle");
+                    debug::Error("Invalid handle");
                 }
                 ReleaseMutex(m_hMutex);
             }
@@ -100,7 +101,7 @@ export namespace win::threading
         public:
             CriticalSection() {
                 if (!InitializeCriticalSectionEx(&m_cs, 0, 0)) {
-                    throw 404;
+                    debug::Error("Initalization failed");
                 }
             }
 
@@ -132,24 +133,24 @@ export namespace win::threading
 
             Semaphore(int threads_count) {
                 if (threads_count <= 0) {
-                    throw std::invalid_argument("Semaphore count must be positive");
+                    throw debug::Error("Semaphore count must be positive");
                 }
                 m_hSemaphore = CreateSemaphore(nullptr, threads_count, threads_count, nullptr);
                 if (!m_hSemaphore.IsValid()) {
-                    throw 404;
+                    debug::Error("Invalid handle");
                 }
             }
 
             void Wait() const {
                 if (!m_hSemaphore.IsValid()) {
-                    throw std::runtime_error("Invalid semaphore handle");
+                    debug::Error("Invalid handle");
                 }
                 WaitForSingleObject(m_hSemaphore, INFINITE);
             }
 
             void Release() {
                 if (!m_hSemaphore.IsValid()) {
-                    throw std::runtime_error("Invalid semaphore handle");
+                    debug::Error("Invalid handle");
                 }
                 ReleaseSemaphore(m_hSemaphore, 1, nullptr);
             }

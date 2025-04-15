@@ -4,6 +4,7 @@
 export module Net;
 
 import win;
+import Error;
 
 
 class WinSock
@@ -19,7 +20,7 @@ public:
             m_data = new WSAData{};
             if (WSAStartup(MAKEWORD(2, 2), m_data))
             {
-                throw 500;
+                throw win::debug::NetError("Winsock failed");
             }
         }
     }
@@ -114,68 +115,68 @@ export namespace win::net
         void Send(const Buffer& data)
         {
             if (!m_valid)
-                throw std::runtime_error("Invalid socket");
+                throw debug::Error("Invalid socket");
             int result = send(m_handle, data.data<char>(), data.len(), 0);
             if (result == SOCKET_ERROR)
-                throw std::runtime_error("Send failed: " + std::to_string(WSAGetLastError()));
+                throw debug::NetError("Cannot send data");
         }
 
         Buffer Receive(size_t maxSize = 4096)
         {
             if (!m_valid)
-                throw std::runtime_error("Invalid socket");
+                throw debug::Error("Invalid socket");
             Buffer buffer(maxSize);
             int received = recv(m_handle, buffer.data<char>(), maxSize, 0);
             if (received <= 0)
-                throw std::runtime_error("Receive failed or connection closed: " + std::to_string(WSAGetLastError()));
-            buffer.shrink(received);
+                throw debug::NetError("Receive failed");
+            buffer.resize(received);
             return buffer;
         }
 
         void Bind(const String& address, const String& port)
         {
             if (!m_valid)
-                throw std::runtime_error("Invalid socket");
+                throw debug::Error("Invalid socket");
 
             SOCKADDR_IN addr;
             InitializeAddress(addr, address, port);
 
             if (bind(m_handle, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) == SOCKET_ERROR)
-                throw std::runtime_error("Bind failed: " + std::to_string(WSAGetLastError()));
+                throw debug::NetError("Bind failed");
         }
 
         void Listen(int backlog = SOMAXCONN)
         {
             if (!m_valid)
-                throw std::runtime_error("Invalid socket");
+                throw debug::Error("Invalid socket");
 
             if (listen(m_handle, backlog) == SOCKET_ERROR)
-                throw std::runtime_error("Listen failed: " + std::to_string(WSAGetLastError()));
+                throw debug::NetError("Listen failed");
         }
 
         void Connect(const String& address, const String& port)
         {
             if (!m_valid)
-                throw std::runtime_error("Invalid socket");
+                throw debug::Error("Invalid socket");
 
             SOCKADDR_IN addr;
             InitializeAddress(addr, address, port);
 
             if (connect(m_handle, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) == SOCKET_ERROR)
-                throw std::runtime_error("Connect failed: " + std::to_string(WSAGetLastError()));
+                throw debug::NetError("Connect failed");
         }
 
         Socket Accept()
         {
             if (!m_valid)
-                throw std::runtime_error("Invalid socket");
+                throw debug::Error("Invalid socket");
 
             sockaddr_in addr;
             int len = sizeof(addr);
 
             SOCKET client = accept(m_handle, reinterpret_cast<sockaddr*>(&addr), &len);
             if (client == INVALID_SOCKET)
-                throw std::runtime_error("Accept failed: " + std::to_string(WSAGetLastError()));
+                throw debug::Error("Accept failed");
 
             return Socket(client, addr.sin_family, m_type, m_protocol);
         }

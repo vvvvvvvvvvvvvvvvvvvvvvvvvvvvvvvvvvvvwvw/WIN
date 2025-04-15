@@ -4,12 +4,13 @@ module StreamReader;
 
 import String;
 import Handle;
+import Error;
 
 namespace win::io
 {
 	StreamReader::StreamReader(Stream stream) : stream(stream)
 	{
-		if (!this->stream.IsValid()) throw 1;
+		if (!this->stream.IsValid()) throw debug::Error("Invalid Stream");;
 	}
 
 	String StreamReader::ReadToEnd()

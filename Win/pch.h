@@ -25,6 +25,6 @@
 #include <tuple>
 #include <functional>
 #include <utility>
-
+#include <intsafe.h>
 
 #pragma comment(lib, "shlwapi.lib")

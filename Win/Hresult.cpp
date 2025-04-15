@@ -2,6 +2,8 @@
 
 module Hresult;
 
+import Error;
+
 namespace win
 {
     Hresult::Hresult() noexcept
@@ -55,7 +57,7 @@ namespace win
     {
         if (FAILED(m_hresult))
         {
-            throw std::system_error(m_hresult, std::system_category(), message);
+            throw debug::Error(message);
         }
     }
 

@@ -3,7 +3,7 @@
 module File;
 
 import String;
-
+import Error;
 
 namespace win::io
 {
@@ -75,7 +75,7 @@ namespace win::io
         );
         if (!m_handle.IsValid())
         {
-            throw std::runtime_error("Failed to open file" + std::to_string((int)(GetLastError())));
+            throw debug::SystemError("Canot open file");
         }
     }
 
@@ -87,30 +87,26 @@ namespace win::io
     void File::Delete()
     {
         if (!m_handle.IsValid())
-            throw std::runtime_error("File handle is invalid");
+            throw debug::Error("Invalid handle");
 
         Close();
 
         if (!DeleteFileW(m_name.data()))
         {
-            throw std::runtime_error("Failed to delete file");
+            throw debug::SystemError("Canot delete file");
         }
-
-        // Если файл был удалён, можно не открывать его заново.
-        // Если же требуется создание нового файла, можно вызвать Open().
-        // Здесь оставляем решение на усмотрение логики приложения.
     }
 
     void File::Move(const String& to)
     {
         if (!m_handle.IsValid())
-            throw std::runtime_error("File handle is invalid");
+            throw debug::Error("Invalid handle");
 
         Close();
 
         if (!MoveFileW(m_name.data(), to.data()))
         {
-            throw std::runtime_error("Failed to move file. Error: " + std::to_string(static_cast<int>(GetLastError())));
+            throw debug::SystemError("Canot move file");
         }
         m_name = to;
 
@@ -120,13 +116,13 @@ namespace win::io
     void File::Copy(const String& to)
     {
         if (!m_handle.IsValid())
-            throw std::runtime_error("File handle is invalid");
+            throw debug::Error("Invalid handle");
 
         Close();
 
         if (!CopyFileW(m_name.data(), to.data(), FALSE))
         {
-            throw std::runtime_error("Failed to copy file");
+            throw debug::SystemError("Copy failed");
         }
 
         Open();

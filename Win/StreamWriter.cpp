@@ -2,11 +2,13 @@
 
 module StreamWriter;
 
+import Error;
+
 namespace win::io
 {
 	StreamWriter::StreamWriter(Stream stream) : stream(stream)
 	{
-		if (!this->stream.IsValid()) throw 1;
+		if (!this->stream.IsValid()) throw debug::Error("Invalid stream");;
 	}
 	
 	bool StreamWriter::Write(String content)
