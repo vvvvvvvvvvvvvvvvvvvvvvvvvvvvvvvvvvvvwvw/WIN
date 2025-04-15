@@ -4,7 +4,7 @@ export module Hresult;
 
 import Object;
 
-export namespace win
+export namespace win::debug
 {
     class Hresult : public Object<Hresult>
     {

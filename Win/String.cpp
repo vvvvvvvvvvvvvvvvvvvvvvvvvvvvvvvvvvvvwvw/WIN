@@ -155,7 +155,7 @@ namespace win::cast
     std::string to_string(int value)
     {
         char* str = nullptr;
-        Hresult result = IntToChar(value, str);
+        debug::Hresult result = IntToChar(value, str);
 
         result.ThrowIfFailed("Cast error");
         return str;

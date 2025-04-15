@@ -48,6 +48,7 @@ export namespace win
 	template<typename T>
 	const T* Buffer::data() const
 	{
-		return data<T>();
+		if (!m_data) throw debug::Error("Buffer is null");
+		return reinterpret_cast<T*>(m_data);
 	}
 }

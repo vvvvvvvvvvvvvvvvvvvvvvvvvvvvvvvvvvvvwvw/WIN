@@ -4,7 +4,7 @@ module Hresult;
 
 import Error;
 
-namespace win
+namespace win::debug
 {
     Hresult::Hresult() noexcept
         : m_hresult(S_OK) {
@@ -57,7 +57,7 @@ namespace win
     {
         if (FAILED(m_hresult))
         {
-            throw debug::Error(message);
+            throw Error(message);
         }
     }
 

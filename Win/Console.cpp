@@ -58,6 +58,11 @@ namespace win::debug
         Write(L"\n");
     }
 
+    void Console::Beep(u_int frq, u_int ms)
+    {
+        ::Beep(frq, ms);
+    }
+
     void Console::Warning(const String& message)
     {
         WriteLine(Color::Yellow, message);

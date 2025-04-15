@@ -48,7 +48,8 @@ export namespace win::debug
 
         static void WriteLine(Color color, const String& message);
         static void WriteLine(const String& message);
-
+           
+        static void Beep(u_int frq, u_int ms);
         static void Warning(const String& message);
         static void Error(const String& message);
         static void Info(const String& message);

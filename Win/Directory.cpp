@@ -20,7 +20,7 @@ namespace win::io
 
 		if (!hFind.IsValid())
 		{
-			Hresult hr(GetLastError());
+			debug::Hresult hr(GetLastError());
 			hr.ThrowIfFailed("Failed to list directory");
 		}
 
@@ -72,7 +72,7 @@ namespace win::io
 	{
 		if (!CreateDirectoryW(m_name.data(), NULL))
 		{
-			Hresult hr(GetLastError());
+			debug::Hresult hr(GetLastError());
 			hr.ThrowIfFailed("Failed to create directory");
 		}
 	}
@@ -100,7 +100,7 @@ namespace win::io
 	{
 		if (!RemoveDirectoryW(name.data()))
 		{
-			Hresult hr(GetLastError());
+			debug::Hresult hr(GetLastError());
 			hr.ThrowIfFailed("Failed to remove directory");
 		}
 	}
