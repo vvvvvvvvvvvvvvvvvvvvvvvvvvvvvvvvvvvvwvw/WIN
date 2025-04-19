@@ -135,6 +135,7 @@
     <ClCompile Include="Error.ixx" />
     <ClCompile Include="MemoryMappedFile.cpp" />
     <ClCompile Include="MemoryMappedFile.ixx" />
+    <ClCompile Include="Process.cpp" />
     <ClCompile Include="Socket.ixx" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Process.ixx" />

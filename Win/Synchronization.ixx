@@ -55,6 +55,9 @@ export namespace win::threading
                 }
             }
         };
+
+		//-------------------------------------------------
+
         class Mutex : public Object<Mutex> {
         private:
             Handle m_hMutex;
@@ -94,6 +97,9 @@ export namespace win::threading
                 }
             }
         };
+
+		//-------------------------------------------------
+
         class CriticalSection {
         private:
             CRITICAL_SECTION m_cs;
@@ -124,6 +130,9 @@ export namespace win::threading
                 return &m_cs;
             }
         };
+
+		//-------------------------------------------------
+
         class Semaphore : public Object<Semaphore> {
         private:
             Handle m_hSemaphore;
@@ -161,6 +170,9 @@ export namespace win::threading
                 }
             }
         };
+
+		//-------------------------------------------------
+
         class ConditionVariable : public Object<ConditionVariable> {
         private:
             CONDITION_VARIABLE cv;
@@ -191,6 +203,9 @@ export namespace win::threading
 
             ~ConditionVariable() = default;
         };
+
+		//-------------------------------------------------
+
         template<typename _Mutex>
         class LockGuard {
         public:

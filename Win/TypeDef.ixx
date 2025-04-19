@@ -16,14 +16,14 @@ export namespace win
 
 	struct TcpStandart
 	{
-		int m_version;
-		int required_version;
+		int m_version{ 0 };
+		int required_version{ 0 };
 	};
 
 	struct TcpPacket : public TcpStandart
 	{
-		char* m_data;
-		int code;
+		char m_data[256]{ 0 };
+		int code{ 0 };
 	};
 
 }

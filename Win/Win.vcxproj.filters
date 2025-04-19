@@ -277,6 +277,9 @@
     <ClCompile Include="WinSock.ixx">
       <Filter>win\win-net</Filter>
     </ClCompile>
+    <ClCompile Include="Process.cpp">
+      <Filter>win\win-system\Process</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

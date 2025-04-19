@@ -20,71 +20,18 @@ export namespace win::system
 
         Process() = default;
 
-        Process(String name)
-        {
-            Open(name, String::null);
-        }
+        Process(String name);
 
-        Process(String name, String command)
-        {
-            Open(name, command);
-        }
+        Process(String name, String command);
 
-        void Open(String name, String command)
-        {
-            ZeroMemory(&m_sinfo, sizeof(m_sinfo));
-            m_sinfo.cb = sizeof(m_sinfo);
+        void Open(String name, String command);
 
-            ZeroMemory(&m_pinfo, sizeof(m_pinfo));
+        void Terminate();
 
-            BOOL result = CreateProcess(
-                name.data(),              
-                command.data(),              
-                nullptr,                       
-                nullptr,                       
-                FALSE,                         
-                0,                           
-                nullptr,                    
-                nullptr,                      
-                &m_sinfo,
-                &m_pinfo
-            );
+        void Wait();
 
-            if (!result)
-            {
-                throw debug::Error("Process Open Error");
-            }
+        Handle Handle() const;
 
-            m_hProcess = m_pinfo.hProcess;
-        }
-
-        void Terminate()
-        {
-            if (!m_hProcess.IsValid())
-                throw debug::Error("Invalid handle");
-
-            TerminateProcess(m_hProcess, 0);
-        }
-
-        void Wait()
-        {
-            if (!m_hProcess.IsValid())
-                throw debug::Error("Invalid handle");
-
-            WaitForSingleObject(m_hProcess, INFINITE);
-        }
-
-        Handle Handle() const
-        {
-            return m_hProcess;
-        }
-
-        ~Process()
-        {
-            if (m_pinfo.hThread)
-                CloseHandle(m_pinfo.hThread);
-            if (m_pinfo.hProcess)
-                CloseHandle(m_pinfo.hProcess);
-        }
+        ~Process();
     };
 }

@@ -89,6 +89,10 @@ export namespace win::threading
     };
 }
 
+//
+// --------------------------------------------------
+//
+
 export namespace win::threading {
 
     class StaticThreadPool : public Object<StaticThreadPool> {
@@ -178,6 +182,10 @@ export namespace win::threading {
     };
 
 }
+
+//
+//-----------------------------------------------
+//
 
 template<typename F, typename... ARGS>
 VOID CALLBACK SystemPoolBody(PTP_CALLBACK_INSTANCE Instance, PVOID Context, PTP_WORK Work)
