@@ -66,7 +66,7 @@ namespace win
     }
     
     Buffer::~Buffer() {
-        delete[] m_data;
+        free();
     }
 
     void Buffer::resize(size_t size) {
