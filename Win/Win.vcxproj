@@ -132,7 +132,9 @@
     <ClCompile Include="Buffer.ixx" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Console.ixx" />
+    <ClCompile Include="Control.ixx" />
     <ClCompile Include="Error.ixx" />
+    <ClCompile Include="Event.ixx" />
     <ClCompile Include="MemoryMappedFile.cpp" />
     <ClCompile Include="MemoryMappedFile.ixx" />
     <ClCompile Include="Process.cpp" />
@@ -169,11 +171,11 @@
     <ClCompile Include="String.ixx" />
     <ClCompile Include="TypeDef.ixx" />
     <ClCompile Include="win-debug.ixx" />
-    <ClCompile Include="win-except.ixx" />
     <ClCompile Include="win-io.ixx" />
     <ClCompile Include="win-net.ixx" />
     <ClCompile Include="win-system.ixx" />
     <ClCompile Include="win-threading.ixx" />
+    <ClCompile Include="win-ui.ixx" />
     <ClCompile Include="win.ixx" />
     <ClCompile Include="WinSock.ixx" />
   </ItemGroup>

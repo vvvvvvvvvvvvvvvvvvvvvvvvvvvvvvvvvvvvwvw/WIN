@@ -134,6 +134,15 @@
     <Filter Include="win\win-dbg\Hresult">
       <UniqueIdentifier>{d7326c26-511f-4251-906f-f15ca3364e8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="win\win-ui\Controls\Control">
+      <UniqueIdentifier>{2d7a305e-367d-42d9-9860-891dac831b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-ui\Controls\Window">
+      <UniqueIdentifier>{c234dd40-357a-4086-af05-58a61a531362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-base\Event">
+      <UniqueIdentifier>{3b2caac7-b865-45c0-bb1a-5f46beb66434}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -253,9 +262,6 @@
     <ClCompile Include="Threading.ixx">
       <Filter>win\win-threading\Threading</Filter>
     </ClCompile>
-    <ClCompile Include="win-except.ixx">
-      <Filter>win\Main</Filter>
-    </ClCompile>
     <ClCompile Include="Synchronization.ixx">
       <Filter>win\win-threading\Synchronization</Filter>
     </ClCompile>
@@ -279,6 +285,15 @@
     </ClCompile>
     <ClCompile Include="Process.cpp">
       <Filter>win\win-system\Process</Filter>
+    </ClCompile>
+    <ClCompile Include="Control.ixx">
+      <Filter>win\win-ui\Controls\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.ixx">
+      <Filter>win\win-base\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="win-ui.ixx">
+      <Filter>win\Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
