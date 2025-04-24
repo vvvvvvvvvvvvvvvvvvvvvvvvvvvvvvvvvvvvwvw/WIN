@@ -10,7 +10,7 @@ export namespace win::debug
     {
     public:
         SystemError(String message)
-            : std::runtime_error(cast::wstring_to_utf8("ERROR [" + win::cast::to_string(GetLastError()) + "]: " + message.c_wstr()))
+            : std::runtime_error(cast::wstring_to_utf8("ERROR [" + win::cast::to_string(GetLastError()) + "]: " + message))
         {
         }
     
@@ -19,7 +19,7 @@ export namespace win::debug
     {
     public:
         Error(String message)
-            : std::runtime_error(cast::wstring_to_utf8(message.c_wstr()))
+            : std::runtime_error(cast::wstring_to_utf8(message.wstr()))
         {
         }
     };

@@ -1,6 +1,6 @@
-import String;
-
 export module Path;
+
+import String;
 
 export namespace win::io
 {

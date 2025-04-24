@@ -3,112 +3,77 @@
 module String;
 import Hresult;
 
-namespace win
-{
-    Char::Char(char ch)
-    {
-        this->ch = ch;
-    }
-    Char::Char(wchar_t wch)
-    {
-        this->ch = wch;
-    }
+namespace win {
 
     String::String(const char* str)
-        : m_string(cast::utf8_to_wstring(str))
-    {
+        : m_string(cast::utf8_to_wstring(str)) {
     }
+
     String::String(const wchar_t* str)
-        : m_string(str)
-    {
+        : m_string(str ? str : L"") {
     }
+
     String::String(const Char* str, size_t size)
-        : m_string(cast::to_wstring(str, size)) 
-    {
+        : m_string(cast::to_wstring(str, size)) {
     }
-    String::String(const Char* str) :
-        m_string((wchar_t*)str)
-    {
+
+    String::String(const Char* str)
+        : m_string([&] {
+        std::wstring tmp;
+        for (const Char* p = str; p && *p; ++p)
+            tmp.push_back(static_cast<wchar_t>(*p));
+        return tmp;
+            }()) {
     }
     String::String(const std::string& str)
-        : m_string(cast::utf8_to_wstring(str))
     {
+		m_string = cast::utf8_to_wstring(str);
     }
-    String::String(const std::wstring& str)
-        : m_string(str)
-    {
-    }
-    String::String(const String& str)
-        : m_string(str.m_string)
-    {
-    }
-    String::String(String&& str) noexcept
-        : m_string(std::move(str.m_string))
-    {
-    }
-
-    String& String::operator=(const String& str)
-    {
-        if (this != &str)
-        {
-            m_string = str.m_string;
-        }
-        return *this;
-    }
-
-    bool String::operator==(const char* str) const
-    {
+    bool String::operator==(const char* str) const {
         return m_string == cast::utf8_to_wstring(str);
     }
-
-    bool String::operator==(const wchar_t* str) const
-    {
-        return m_string == str;
+    bool String::operator==(const wchar_t* str) const {
+        return m_string == (str ? str : L"");
     }
 
-    String operator+(const char* lhs, const String& rhs)
-    {
-        std::wstring lhs_wstr = cast::utf8_to_wstring(lhs);
-        return String(lhs_wstr + rhs.c_wstr());
-    }
-
-    String operator+(const wchar_t* lhs, const String& rhs)
-    {
-        std::wstring lhs_wstr(lhs);
-        return String(lhs_wstr + rhs.c_wstr());
-    }
-
-    String operator+(const String& lhs, const char* rhs)
-    {
-        std::wstring rhs_wstr = cast::utf8_to_wstring(rhs);
-        return String(lhs.c_wstr() + rhs_wstr);
-    }
-
-    String operator+(const String& lhs, const wchar_t* rhs)
-    {
-        std::wstring rhs_wstr(rhs);
-        return String(lhs.c_wstr() + rhs_wstr);
-    }
-
-    String operator+(const String& lhs, const String& rhs)
-    {
-        return String(lhs.c_wstr() + rhs.c_wstr());
-    }
-
-    std::ostream& operator<<(std::ostream& os, const String& str)
-    {
-        os << win::cast::wstring_to_utf8(str.c_wstr());
+    std::ostream& operator<<(std::ostream& os, const String& str) {
+        os << win::cast::wstring_to_utf8(str.wstr());
         return os;
     }
 
-    std::istream& operator>>(std::istream& is, String& str)
-    {
+    std::istream& operator>>(std::istream& is, String& str) {
         std::string input;
         is >> input;
-        str.c_wstr() = cast::utf8_to_wstring(input);
+        str.wstr() = cast::utf8_to_wstring(input);
         return is;
     }
-}
+
+    String operator+(const String& lhs, const String& rhs) {
+        return String(lhs.wstr() + rhs.wstr());
+    }
+    String operator+(const String& lhs, const char* rhs) {
+        return String(lhs.wstr() + cast::utf8_to_wstring(rhs));
+    }
+    String operator+(const String& lhs, const wchar_t* rhs) {
+        return String(lhs.wstr() + (rhs ? rhs : L""));
+    }
+    String operator+(const char* lhs, const String& rhs) {
+        return String(cast::utf8_to_wstring(lhs) + rhs.wstr());
+    }
+    String operator+(const wchar_t* lhs, const String& rhs) {
+        return String((lhs ? lhs : L"") + rhs.wstr());
+    }
+    String operator+(const std::string& lhs, const String& rhs) {
+        return String(lhs) + rhs;
+    }
+    String operator+(const String& lhs, const std::string& rhs) {
+        return lhs + String(rhs);
+    }
+} 
+
+
+// ---------------- WIN CAST ----------------
+// str to int
 
 namespace win::cast
 {
@@ -161,7 +126,7 @@ namespace win::cast
         return str;
     }
 
-   
+
     // STR -> INTEGER
     int to_int(String str)
     {

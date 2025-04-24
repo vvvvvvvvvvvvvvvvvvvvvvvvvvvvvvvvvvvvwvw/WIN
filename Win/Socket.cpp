@@ -8,8 +8,8 @@ namespace win::net
 	{
 		memset(&addr, 0, sizeof(addr));
 		addr.sin_family = AF_INET;
-		addr.sin_port = htons(cast::to_int(port));
-		std::string ip = cast::wstring_to_utf8(address.c_wstr());
+		//addr.sin_port = htons(cast::to_int(port));
+		std::string ip = cast::wstring_to_utf8(address.wstr());
 		addr.sin_addr.s_addr = inet_addr(ip.c_str());
 	}
 	Socket::Socket(int domain, int type, int protocol)
