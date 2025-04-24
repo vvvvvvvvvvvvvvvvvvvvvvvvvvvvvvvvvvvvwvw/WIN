@@ -1,4 +1,5 @@
-﻿#include  "pch.h"
+﻿module;
+#include  "pch.h"
 
 export module Threading;
 

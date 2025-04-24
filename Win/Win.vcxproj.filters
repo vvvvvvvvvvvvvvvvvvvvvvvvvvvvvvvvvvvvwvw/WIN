@@ -137,11 +137,17 @@
     <Filter Include="win\win-ui\Controls\Control">
       <UniqueIdentifier>{2d7a305e-367d-42d9-9860-891dac831b0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="win\win-ui\Controls\Window">
-      <UniqueIdentifier>{c234dd40-357a-4086-af05-58a61a531362}</UniqueIdentifier>
-    </Filter>
     <Filter Include="win\win-base\Event">
       <UniqueIdentifier>{3b2caac7-b865-45c0-bb1a-5f46beb66434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-ui\Controls\Controls">
+      <UniqueIdentifier>{0d2b992e-dfc6-461f-a1b7-a61cd02532c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-ui\Controls\Form">
+      <UniqueIdentifier>{c234dd40-357a-4086-af05-58a61a531362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\win-ui\Controls\EventArgs">
+      <UniqueIdentifier>{da5d0164-f333-46b7-aa6a-0bd43b6e3a6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +300,15 @@
     </ClCompile>
     <ClCompile Include="win-ui.ixx">
       <Filter>win\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Control.cpp">
+      <Filter>win\win-ui\Controls\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.ixx">
+      <Filter>win\win-ui\Controls\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="EventArgs.ixx">
+      <Filter>win\win-ui\Controls\EventArgs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

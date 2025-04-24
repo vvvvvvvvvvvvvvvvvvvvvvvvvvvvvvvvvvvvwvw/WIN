@@ -1,4 +1,5 @@
-﻿#include "pch.h"
+﻿module;
+#include "pch.h"
 
 export module String;
 import Object;
@@ -51,6 +52,7 @@ export namespace win {
 
         bool operator==(const char* str) const;
         bool operator==(const wchar_t* str) const;
+		bool operator==(const String& str) const { return m_string == str.m_string; }
         operator std::wstring() const noexcept { return m_string; }
 
        

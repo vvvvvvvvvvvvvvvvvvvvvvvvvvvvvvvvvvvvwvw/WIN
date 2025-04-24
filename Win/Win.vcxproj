@@ -132,9 +132,12 @@
     <ClCompile Include="Buffer.ixx" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Console.ixx" />
+    <ClCompile Include="Control.cpp" />
     <ClCompile Include="Control.ixx" />
     <ClCompile Include="Error.ixx" />
     <ClCompile Include="Event.ixx" />
+    <ClCompile Include="EventArgs.ixx" />
+    <ClCompile Include="Form.ixx" />
     <ClCompile Include="MemoryMappedFile.cpp" />
     <ClCompile Include="MemoryMappedFile.ixx" />
     <ClCompile Include="Process.cpp" />

@@ -1,44 +1,40 @@
+
+module;
 #include "pch.h"
 
 export module Control;
 
 import win;
+import eargs;
+import Event;
 
 
-// alppppphhhhaaaaaa
 export namespace win::ui
 {
-	struct MouseEventArgs
-	{
-		int x;
-		int y;
-	};
-	struct KeyEventArgs
-	{
-		int key;
-	};
-
-
 	class Control : public Object<Control>
 	{
-	private:
-
+	protected:
 		HWND m_hWnd;
 		HWND m_parent;
 		bool m_enabled;
 		String m_name;
 		Point m_position;
 		Rect m_rect;
-
-	private:
-
-	
-
+		Event<MouseEventArgs> on_click;
+		Event<PaintEventArgs> on_paint;
 	public:
 
+		Control() = default;
+		~Control() = default;
 	
 		bool Enabled() const;
 		void Enabled(bool value);
+		
+		String Name() const;
+		void Name(String value);
+
+		Point Position() const;
+		void Position(Point value);
 
 		void Select();
 		void PerfomClick();
@@ -48,7 +44,5 @@ export namespace win::ui
 
 		void Invalidate();
 		void FindForm();
-
-		
 	};
 }

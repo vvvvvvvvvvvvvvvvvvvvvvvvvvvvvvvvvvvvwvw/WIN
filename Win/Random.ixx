@@ -1,3 +1,4 @@
+module;
 #include "pch.h"
 
 export module Random;

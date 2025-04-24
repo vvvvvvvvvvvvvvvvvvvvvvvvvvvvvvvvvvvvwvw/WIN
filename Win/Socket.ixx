@@ -1,4 +1,4 @@
-﻿// Net.ix
+﻿module;
 #include "pch.h"
 
 export module Socket;

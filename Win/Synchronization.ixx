@@ -1,5 +1,5 @@
-#include <Windows.h>
-#include <stdexcept>
+module;
+#include "pch.h"
 
 export module Synchronization;
 

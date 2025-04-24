@@ -10,7 +10,6 @@ namespace win {
         m_data = new wchar_t[m_capacity];
         std::wmemcpy(m_data, data.c_str(), m_capacity);
     }
-
     Buffer::Buffer(const char* data) {
         if (!data) {
             m_capacity = 1;
@@ -25,20 +24,17 @@ namespace win {
             m_len = std::wcslen(m_data);
         }
     }
-
     Buffer::Buffer(size_t size) {
         m_capacity = (size > 0 ? size : 1);
         m_data = new wchar_t[m_capacity]();
         m_len = 0;
     }
-
     Buffer::Buffer(const Buffer& other) {
         m_len = other.m_len;
         m_capacity = other.m_capacity;
         m_data = new wchar_t[m_capacity];
         std::wmemcpy(m_data, other.m_data, m_capacity);
     }
-
     Buffer& Buffer::operator=(const Buffer& other) {
         if (this != &other) {
             delete[] m_data;
@@ -49,7 +45,6 @@ namespace win {
         }
         return *this;
     }
-
     Buffer::Buffer(Buffer&& other) noexcept
         : m_data(other.m_data), m_len(other.m_len), m_capacity(other.m_capacity)
     {
@@ -57,7 +52,6 @@ namespace win {
         other.m_len = 0;
         other.m_capacity = 0;
     }
-
     Buffer& Buffer::operator=(Buffer&& other) noexcept {
         if (this != &other) {
             delete[] m_data;
@@ -70,11 +64,9 @@ namespace win {
         }
         return *this;
     }
-
     Buffer::~Buffer() {
         delete[] m_data;
     }
-
     void Buffer::resize(size_t newSize) {
         if (newSize == 0) newSize = 1;            
         if (newSize == m_capacity) return;
@@ -91,7 +83,6 @@ namespace win {
         m_capacity = newSize;
         m_len = toCopy;
     }
-
     void Buffer::free() {
         delete[] m_data;
         m_data = nullptr;

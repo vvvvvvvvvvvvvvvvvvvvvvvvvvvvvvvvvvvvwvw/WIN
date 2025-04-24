@@ -1,3 +1,4 @@
+module;
 #include "pch.h"
 
 export module TypeDef;
@@ -22,6 +23,11 @@ export namespace win
 		int y{ 0 };
 		Point() = default;
 		Point(int x, int y) : x(x), y(y) {}
+
+		bool operator==(const Point& other) const
+		{
+			return (x == other.x && y == other.y);
+		}
 	};
 	struct Rect
 	{
