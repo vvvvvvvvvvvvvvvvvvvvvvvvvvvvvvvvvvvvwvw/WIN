@@ -1,191 +1,184 @@
-Вот пример кода для раздела README:
-
 ---
 
 # 🧩 WinAPI Modular Framework
 
-Простой и чистый фреймворк на C++ с использованием **только WinAPI**, без сторонних библиотек. Проект построен на модульной архитектуре с базовыми компонентами для работы с файлами, директориями, консолью и потоками.
+A simple, clean C++ framework using **only the WinAPI**, with no external libraries. The project is built on a modular architecture with core components for working with files, directories, console I/O, and threads.
 
 > ✅ C++20 Modules  
-> ✅ Только WinAPI  
-> ✅ Минимализм и читаемость  
-> ✅ Безопасное управление ресурсами
+> ✅ Pure WinAPI  
+> ✅ Minimalist & Readable  
+> ✅ Safe Resource Management
 
 ---
 
-## 🔧 Модули
+## 🔧 Modules
 
-| Модуль                | Описание                                                                 |
-|------------------------|--------------------------------------------------------------------------|
-| `Object`               | Базовый CRTP-шаблон                                                     |
-| `Handle`               | Безопасная обёртка над дескрипторами WinAPI                             |
-| `String`               | Широкая строка с поддержкой конверсии UTF-8 / UTF-16                    |
-| `Hresult`              | Удобная работа с HRESULT                                                |
-| `Console`              | Цветной вывод и ввод из консоли                                         |
-| `File`                 | Работа с файлами                                                        |
-| `Directory`            | Работа с директориями                                                   |
-| `StreamReader`         | Последовательное чтение потока                                          |
-| `StreamWriter`         | Последовательная запись в поток                                         |
-| `Buffer`               | Удобное хранение и передача бинарных данных                             |
-| `MemoryMappedFile`     | Работа с файлами, отображёнными в память                                |
-| `Random`               | Генерация псевдослучайных чисел                                         |
-| `Event`                | Работа с событиями                                        		   |
-| `Signal`               | Упрощённый механизм синхронизации (сигналы открытия/закрытия потока)    |
-| `Mutex`                | Классический мьютекс (дорогой по ресурсам)                              |
-| `CriticalSection`      | Лёгкий и быстрый аналог мьютекса                                        |
-| `Semaphore`            | Семафор для ограничения доступа потоков                                 |
-| `ConditionVariable`    | Остановка и пробуждение потока по условию (например, очередь задач)      |
-| `LockGuard`            | Автоматическая блокировка/разблокировка `Mutex` или `CriticalSection`   |
-| `Thread`               | Создание и управление потоками                                          |
-| `StaticThreadPool`     | Пул фиксированного числа потоков для асинхронных задач                  |
-| `SystemThreadPool`     | Использование системного пула потоков                                   |
-| `Socket`               | Обёртка над сокетами (без специализации)                               |
-| `Process`              | Управление внешними процессами                                          |
-| `Time`                 | Получение системного времени                                            |
-| `PerformanceCounter`   | Работа со счётчиками производительности                                 |
+| Module                  | Description                                                              |
+|-------------------------|---------------------------------------------------------------------------|
+| `Object`                | Basic CRTP template                                                       |
+| `Handle`                | Safe wrapper around WinAPI handles                                        |
+| `String`                | Wide‐string with UTF-8/UTF-16 conversion support                          |
+| `Hresult`               | Convenient HRESULT handling                                               |
+| `Console`               | Colored console input/output                                              |
+| `File`                  | File operations                                                           |
+| `Directory`             | Directory operations                                                      |
+| `StreamReader`          | Sequential stream reading                                                 |
+| `StreamWriter`          | Sequential stream writing                                                 |
+| `Buffer`                | Convenient storage and transfer of binary data                            |
+| `MemoryMappedFile`      | Working with memory-mapped files                                          |
+| `Random`                | Pseudorandom number generation                                            |
+| `Event`                 | Event object handling                                                      |
+| `Signal`                | Lightweight synchronization (open/close signals)                           |
+| `Mutex`                 | Classic mutex (resource-heavy)                                            |
+| `CriticalSection`       | Lightweight, fast alternative to mutex                                     |
+| `Semaphore`             | Semaphore for limiting thread access                                      |
+| `ConditionVariable`     | Thread wait/wake by condition (e.g., task queue)                          |
+| `LockGuard`             | RAII lock/unlock for `Mutex` or `CriticalSection`                         |
+| `Thread`                | Thread creation and management                                            |
+| `StaticThreadPool`      | Fixed-size thread pool for asynchronous tasks                             |
+| `SystemThreadPool`      | Wrapper over the system thread pool                                       |
+| `Socket`                | Basic socket wrapper (no protocol specialization)                         |
+| `Process`               | External process management                                               |
+| `Time`                  | System time retrieval                                                     |
+| `PerformanceCounter`    | Performance counter utilities                                              |
 
 ---
 
+## 📦 Usage Examples
 
-## 📦 Примеры использования
-
-### 📁 Работа с файлами
+### 📁 File Operations
 
 ```cpp
 win::io::File file(L"example.txt", true);
-file.GetStream(); // получить дескриптор
+file.GetStream(); // get the handle
 ```
 
-### 📚 Чтение из файла
+### 📚 Reading from a File
+
 ```cpp
 win::io::StreamReader reader(file.GetStream());
 win::dbg::Console::Info(reader.ReadToEnd());
 ```
 
-### ✍️ Запись в файл
+### ✍️ Writing to a File
+
 ```cpp
 win::io::StreamWriter writer(file.GetStream());
-writer.WriteLine(L"Привет, мир!");
+writer.WriteLine(L"Hello, world!");
 ```
 
-### 🧹 Автоматическое удаление
+### 🧹 Automatic Cleanup
+
 ```cpp
 file.Delete();
 ```
 
-### 📁 Работа с директориями
+### 📁 Directory Operations
+
 ```cpp
 win::io::Directory dir(L"MyFolder", true);
 if (dir.Exists()) {
-    for (auto& file : dir.GetFiles()) {
-        win::dbg::Console::Info(file.Name());
+    for (auto& f : dir.GetFiles()) {
+        win::dbg::Console::Info(f.Name());
     }
 }
 ```
 
-### 🖥️ Работа с консолью
+### 🖥️ Console I/O
+
 ```cpp
-win::dbg::Console::WriteLine(win::dbg::Console::Color::Green, L"Успешно!");
-win::dbg::Console::Error(L"Произошла ошибка.");
+win::dbg::Console::WriteLine(win::dbg::Console::Color::Green, L"Success!");
+win::dbg::Console::Error(L"An error occurred.");
 ```
 
-### 🧵 Многопоточность
+### 🧵 Multithreading
+
 ```cpp
-void Pool_Example()
-{
-	win::dbg::Console::Success("Hello From WINAPI!");
+void PoolExample() {
+    win::dbg::Console::Success("Hello From WinAPI!");
 }
 
-int main()
-{
-	win::threading::StaticThreadPool sth(3);
-	sth.enqueue(Pool_Example);
-	sth.enqueue(Pool_Example);
-	sth.enqueue(Pool_Example);
+int main() {
+    win::threading::StaticThreadPool pool(3);
+    pool.enqueue(PoolExample);
+    pool.enqueue(PoolExample);
+    pool.enqueue(PoolExample);
 
-	win::threading::Thread::Sleep(999999);
-
-	//   :(
-
-	return 0;
+    win::threading::Thread::Sleep(999999);
+    return 0;
 }
 ```
-## 🌐 Сетевое программирование (сырое)
-```
-void client_handling(win::net::Socket client)
-{
-    // exo server
-    while (true)
-    {
-        win::Buffer message = client.Receive();
-        client.Send(message);
+
+### 🌐 Networking (Raw)
+
+```cpp
+void handleClient(win::net::Socket client) {
+    while (true) {
+        win::Buffer msg = client.Receive();
+        client.Send(msg);
     }
 }
 
-int main()
-{
-   
-    win::net::Socket server_socket(win::net::ipv4, win::net::tcp);
-    server_socket.Bind("127.0.0.1", "8080");
-    server_socket.Listen(10);
+int main() {
+    win::net::Socket server(win::net::ipv4, win::net::tcp);
+    server.Bind("127.0.0.1", "8080");
+    server.Listen(10);
 
-    win::threading::SystemThreadPool sys_pool;
-    
-    while (true)
-    {
-        auto client = server_socket.Accept();
-        sys_pool.enqueue(client_handling, std::move(client));
+    win::threading::SystemThreadPool sysPool;
+
+    while (true) {
+        auto client = server.Accept();
+        sysPool.enqueue(handleClient, std::move(client));
     }
     return 0;
 }
 ```
+
 ---
 
-## 🚧 Планы на будущее
+## 🚧 Roadmap
 
-В следующих версиях будет добавлено:
+Coming in future releases:
 
-- **v0.3 - v0.4**:
-  - 🌐 **Сетевое программирование** (Winsock)
+- **v0.3 – v0.4**:  
+  - 🌐 **Networking** (Winsock)
+
 ---
 
-## 📌 Текущая версия
-
+## 📌 Current Version
 
 **v0.3**
 
 ---
 
-### Изменения в версии v0.2.5:
+### Changes in v0.2.5
 
+- 🧵 **Added `Synchronization` module**, including:
+  - `Signal` — wrapper for `CreateEvent`
+  - `Mutex` — mutual‐exclusion primitive
+  - `CriticalSection` — lightweight mutex alternative
+  - `Semaphore` — concurrency limiter
+  - `ConditionVariable` — wait/wake synchronization
+  - `LockGuard` — RAII lock for automatic acquire/release
+- 🧵 **Added `Threading` module**, including:
+  - `Thread` — safe wrapper for `CreateThread`
+  - `StaticThreadPool` — thread pool with task queue and `future`
+  - `SystemThreadPool` — wrapper for `CreateThreadpoolWork`
 
-- 🧵 **Добавлен модуль `Synchronization`**, включающий:
-  - `Signal` — обёртка над `CreateEvent`
-  - `Mutex` — класс для защиты от одновременного доступа
-  - `CriticalSection` — lightweight-альтернатива мьютексу
-  - `Semaphore` — управление количеством одновременно работающих потоков
-  - `ConditionVariable` — синхронизация ожидания с возможностью пробуждения
-  - `LockGuard` — RAII-обёртка для автоматического захвата/освобождения
-- 🧵 **Добавлен модуль `Threading`**, включающий:
-  - `Thread` — безопасный обёрточный класс для `CreateThread`
-  - `StaticThreadPool` — пул потоков с поддержкой очереди задач и `future`
-  - `SystemThreadPool` — обёртка над `CreateThreadpoolWork`, нативный thread pool Windows
-  
---- 
+---
 
-## 📥 Установка
+## 📥 Installation
 
-1. Клонируйте репозиторий:
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/yourusername/WIN.git
    ```
 
-2. Скомпилируйте проект с использованием вашего любимого компилятора C++20:
+2. Build with your favorite C++20 compiler:
 
    ```bash
    g++ -std=c++20 -o your_program main.cpp
    ```
 
 ---
-
